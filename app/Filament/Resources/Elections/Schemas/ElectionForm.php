@@ -94,7 +94,7 @@ class ElectionForm
                                     ->toArray();
                             })
                             ->required()
-                            ->minItems(2)
+                            ->minItems(1)
                             ->reactive()
                             ->columns(2)->searchable()
                             ->gridDirection('row')
