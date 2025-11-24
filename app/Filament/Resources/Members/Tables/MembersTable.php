@@ -50,7 +50,7 @@ class MembersTable
                 ->color("warning")->validateUsing([
                 'first_name' => 'required',
                 'last_name' => 'required',
-                'practice_ID' => ['required','numeric'],
+                'practice_ID' => ['required','numeric','unique:members,practice_ID'],
             ]) ->sampleExcel(
                 sampleData: [
                     ['first_name' => 'John', 'last_name' => 'Doe', 'email' => 'john@doe.com', 'grade' => 'Associate', 'practice_ID' => '015737'],
