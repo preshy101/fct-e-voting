@@ -6,8 +6,10 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Get;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class CategoryForm
 {
@@ -20,24 +22,32 @@ class CategoryForm
                 ->description('Manage election categories here.')
                     ->schema([
                 TextInput::make('title')
-                    ->required(),
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function ($set, ?string $state, $context) {
+                        if ($context === 'create') {
+                            $set('slug', Str::slug($state));
+                        }
+                    }),
                 Textarea::make('description')
                     ->default(null)
                     ->columnSpanFull(),
                 TextInput::make('slug')
-                    ->required(),
+                    ->required()
+                    ->disabled(fn ($context) => $context === 'edit')
+                    ->dehydrated(),
 
                 Toggle::make('is_active')
                     ->required(),
-                ])->columns(9),
+                ])->columnSpan(9),
 
                 Section::make('Banner Image')
                 ->description('Manage the banner image for the election category.')
                     ->schema([
                         FileUpload::make('image')->nullable()
                         ->image(),
-                    ])->columns(1)
-                ])->columns(2);
+                    ])->columnSpan(3)
+                ])->columns(12);
 
 
     }

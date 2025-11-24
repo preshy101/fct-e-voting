@@ -9,7 +9,7 @@ use App\Filament\Resources\Members\Pages\ViewMember;
 use App\Filament\Resources\Members\Schemas\MemberForm;
 use App\Filament\Resources\Members\Schemas\MemberInfolist;
 use App\Filament\Resources\Members\Tables\MembersTable;
-use App\Models\Member;
+use App\Models\member;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
