@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Users\Schemas;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class UserForm
@@ -13,6 +14,9 @@ class UserForm
     {
         return $schema
             ->components([
+                Section::make('User Information')
+                    ->description('Manage user information here.')
+                    ->schema([
                 TextInput::make('name')
                     ->required(),
                 TextInput::make('email')
@@ -23,10 +27,12 @@ class UserForm
                 TextInput::make('password')
                     ->password()
                     ->required(),
-                Select::make('roles')
-                ->label(__('Role Name'))
-                ->relationship('roles', 'name')
-                ->placeholder(__('Superuser')),
-            ]);
+                // Select::make('roles')
+                // ->label(__('Role Name'))
+                // ->relationship('roles', 'name')
+                // ->placeholder(__('Superuser')),
+            ])->columnSpanFull()
+            ])
+            ;
     }
 }
