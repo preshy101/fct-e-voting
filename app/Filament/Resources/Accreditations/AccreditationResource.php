@@ -7,7 +7,7 @@ use App\Filament\Resources\Accreditations\Pages\EditAccreditation;
 use App\Filament\Resources\Accreditations\Pages\ListAccreditations;
 use App\Filament\Resources\Accreditations\Schemas\AccreditationForm;
 use App\Filament\Resources\Accreditations\Tables\AccreditationsTable;
-use App\Models\Accreditation;
+use App\Models\accreditation;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

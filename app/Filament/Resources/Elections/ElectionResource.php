@@ -9,7 +9,7 @@ use App\Filament\Resources\Elections\Pages\ViewElection;
 use App\Filament\Resources\Elections\Schemas\ElectionForm;
 use App\Filament\Resources\Elections\Schemas\ElectionInfolist;
 use App\Filament\Resources\Elections\Tables\ElectionsTable;
-use App\Models\Election;
+use App\Models\election;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

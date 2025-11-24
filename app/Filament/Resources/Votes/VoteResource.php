@@ -9,7 +9,7 @@ use App\Filament\Resources\Votes\Pages\ViewVote;
 use App\Filament\Resources\Votes\Schemas\VoteForm;
 use App\Filament\Resources\Votes\Schemas\VoteInfolist;
 use App\Filament\Resources\Votes\Tables\VotesTable;
-use App\Models\Vote;
+use App\Models\vote;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

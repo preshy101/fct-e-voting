@@ -96,7 +96,7 @@ class VoteController extends Controller
             }
 
             // Get member and candidate details
-            $member = \App\Models\Member::findOrFail($request->member_id);
+            $member = \App\Models\member::findOrFail($request->member_id);
             $candidate = \App\Models\candidate::findOrFail($request->candidate_id);
 
             // Create vote token
@@ -175,7 +175,7 @@ class VoteController extends Controller
             'practice_id' => 'required|exists:members,practice_ID',
         ]);
 
-        $member = \App\Models\Member::where('practice_ID', $request->practice_id)->first();
+        $member = \App\Models\member::where('practice_ID', $request->practice_id)->first();
 
         if (!$member) {
             return response()->json([
@@ -243,7 +243,7 @@ class VoteController extends Controller
                 ], 422);
             }
 
-            $member = \App\Models\Member::findOrFail($request->member_id);
+            $member = \App\Models\member::findOrFail($request->member_id);
             $votesData = [];
 
             foreach ($request->votes as $electionId => $candidateId) {

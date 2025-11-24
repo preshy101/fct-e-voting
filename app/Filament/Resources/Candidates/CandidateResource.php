@@ -9,7 +9,7 @@ use App\Filament\Resources\Candidates\Pages\ViewCandidate;
 use App\Filament\Resources\Candidates\Schemas\CandidateForm;
 use App\Filament\Resources\Candidates\Schemas\CandidateInfolist;
 use App\Filament\Resources\Candidates\Tables\CandidatesTable;
-use App\Models\Candidate;
+use App\Models\candidate;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
