@@ -8,12 +8,12 @@ class candidate extends Model
 {
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(category::class);
     }
 
     public function candidateBio()
     {
-        return $this->hasOne(CandidateBio::class);
+        return $this->hasOne(candidateBio::class);
     }
 
     public function getFullNameAttribute()
@@ -23,7 +23,7 @@ class candidate extends Model
 
     public function elections()
     {
-        return $this->belongsToMany(Election::class, 'candidate_election');
+        return $this->belongsToMany(election::class, 'candidate_election');
     }
 
     public function votes()
