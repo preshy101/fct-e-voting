@@ -22,12 +22,10 @@
         <nav class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
-                    <a href="{{ route('election') }}" class="text-gray-600 hover:text-gray-800">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                    </a>
-                    <h1 class="text-2xl font-bold text-blue-600">E-Vote Portal</h1>
+                    <a href="{{ route('election') }}" class="flex items-center gap-3 text-gray-600 hover:text-gray-800">
+                        <img src="{{ asset('build/assets/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
+                     </a>
+                    <h1 class="text-2xl font-bold text-blue-600">FCT e-Voting</h1>
                 </div>
                 <span class="text-sm text-gray-600">Vote in All Active Elections</span>
             </div>

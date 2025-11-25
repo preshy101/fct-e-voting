@@ -55,10 +55,11 @@
     <header class="bg-white shadow-sm">
         <nav class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
-                <a href="#" class="text-2xl font-bold text-blue-600">E-Vote</a>
-                {{-- <button class="px-4 py-2 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
-                    Login
-                </button> --}}
+                <a href="/" class="flex items-center gap-3 text-2xl font-bold text-blue-600">
+                    <img src="{{ asset('build/assets/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
+                    <span>FCT e-Voting</span>
+                </a>
+
             </div>
         </nav>
     </header>

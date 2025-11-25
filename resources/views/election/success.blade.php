@@ -16,8 +16,12 @@
     <!-- Header -->
     <header class="bg-white shadow-sm">
         <nav class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <h1 class="text-2xl font-bold text-blue-600">E-Vote Portal</h1>
+           <div class="flex items-center justify-between">
+                <a href="/" class="flex items-center gap-3 text-2xl font-bold text-blue-600">
+                    <img src="{{ asset('build/assets/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
+                    <span>FCT e-Voting</span>
+                </a>
+
             </div>
         </nav>
     </header>
@@ -34,7 +38,7 @@
                 </div>
 
                 <h1 class="text-3xl font-bold text-gray-900 mb-4">Vote Cast Successfully!</h1>
-                
+
                 <p class="text-lg text-gray-600 mb-6">
                     Thank you for participating in <span class="font-semibold text-gray-900">{{ $election->title }}</span>
                 </p>
@@ -78,11 +82,11 @@
 
                 <!-- Action Buttons -->
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="{{ route('election.result', $election->id) }}" 
+                    <a href="{{ route('election.result', $election->id) }}"
                        class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
                         View Live Results
                     </a>
-                    <a href="/" 
+                    <a href="/"
                        class="px-6 py-3 bg-gray-200 text-gray-800 font-medium rounded-lg hover:bg-gray-300 transition-colors">
                         Return to Home
                     </a>
