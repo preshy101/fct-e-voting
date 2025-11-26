@@ -64,7 +64,7 @@
 
         <p>Dear {{ $member->first_name }} {{ $member->last_name }},</p>
 
-        <p>Your accreditation token has been successfully generated. Please use this token to access the voting system.</p>
+        <p>Your accreditation token has been successfully generated. Please use this token to cast your vote.</p>
 
         <div class="token-box">
             <p style="margin: 0; font-size: 14px; color: #666;">Your Accreditation Token:</p>

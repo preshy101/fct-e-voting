@@ -45,9 +45,8 @@
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
-                    </svg>
+                    <img src="{{ asset('./build/assets/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
+
                     <h1 class="text-3xl font-bold">E-Voting System</h1>
                 </div>
                 @auth
@@ -61,9 +60,9 @@
                     </form> --}}
                 </div>
                 @else
-                <a href="{{ route('login') }}" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-6 py-2 rounded-lg text-sm font-medium transition">
+                {{-- <a href="{{ route('login') }}" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-6 py-2 rounded-lg text-sm font-medium transition">
                     Login
-                </a>
+                </a> --}}
                 @endauth
             </div>
         </div>
@@ -173,7 +172,7 @@
                         <span class="text-2xl font-bold text-purple-600">1</span>
                     </div>
                     <h4 class="font-bold text-lg mb-2">Get Accredited</h4>
-                    <p class="text-gray-600 text-sm">Use your accreditation token to verify your identity</p>
+                    <p class="text-gray-600 text-sm">Use your Practice ID to verify your identity</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
