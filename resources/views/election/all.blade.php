@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="{{ asset('./build/assets/fctLogo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('js/fctLogo.png') }}">
     <title>Vote in All Elections - E-Vote Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('election') }}" class="flex items-center gap-3 text-gray-600 hover:text-gray-800">
-                        <img src="{{ asset('./build/assets/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
+                        <img src="{{ asset('js/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
                      </a>
                     <h1 class="text-2xl font-bold text-blue-600">FCT e-Voting</h1>
                 </div>

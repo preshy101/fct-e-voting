@@ -6,7 +6,8 @@
     <title>E-Voting System - Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
+     <link rel="icon" type="image/png" href="{{ asset('js/fctLogo.png') }}">
+   <style>
         body {
             font-family: 'Inter', sans-serif;
         }
@@ -45,7 +46,7 @@
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <img src="{{ asset('build/assets/fctLogo.png') }}" width="50" height="50" alt="FCT Logo">
+                    <img src="{{ asset('js/fctLogo.png') }}" width="50" height="50" alt="FCT Logo">
 
                     <h1 class="text-3xl font-bold">E-Voting System</h1>
                 </div>
