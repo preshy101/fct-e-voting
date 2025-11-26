@@ -46,6 +46,7 @@ class ElectionResource extends Resource
     {
         return [
             \App\Filament\Resources\Elections\RelationManagers\CandidatesRelationManager::class,
+            \App\Filament\Resources\Elections\RelationManagers\VotesRelationManager::class,
         ];
     }
 
