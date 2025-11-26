@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     // $elections = \App\Models\election::where([['is_active', true], ['start_date', '<=', now()], ['end_date', '>=', now()]])->get();
     // dd();
-    return view('accreditation.index'
+    return view('home.index'
     // , compact('elections')
     );
 })->name('home');

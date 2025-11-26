@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('./build/assets/fctLogo.png') }}">
     <title>Election Details - E-Vote Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -22,7 +23,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
-                        <img src="{{ asset('build/assets/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
+                        <img src="{{ asset('./build/assets/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
 
                     </a>
                     <h1 class="text-2xl font-bold text-blue-600">FCT e-Voting</h1>

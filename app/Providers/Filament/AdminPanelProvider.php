@@ -28,6 +28,9 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandLogo(asset('./build/assets/fctLogo.png'))
+            ->brandName('FCT e-Voting')
+            ->favicon(asset('./build/assets/fctLogo.png'))
             ->sidebarCollapsibleOnDesktop()
             ->collapsedSidebarWidth('9rem')
             ->colors([

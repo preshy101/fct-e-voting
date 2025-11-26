@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('./build/assets/fctLogo.png') }}">
     <title>Vote Successful - E-Vote Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -36,7 +37,7 @@
         <nav class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <a href="/" class="flex items-center gap-3 text-2xl font-bold text-blue-600">
-                    <img src="{{ asset('build/assets/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
+                    <img src="{{ asset('./build/assets/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
                     <span>FCT e-Voting</span>
                 </a>
 
@@ -142,12 +143,12 @@
                        class="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg">
                         Return to Home
                     </a>
-                    @if($allowResultPreview)
+                    {{-- @if($allowResultPreview == true)
                     <a href="{{ route('election.result', ['id' => $votes[0]['election_id']]) }}"
                        class="px-8 py-3 bg-white text-blue-600 font-semibold rounded-lg border-2 border-blue-600 hover:bg-blue-50 transition-colors">
                         View Results
                     </a>
-                    @endif
+                    @endif --}}
                 </div>
             </div>
 

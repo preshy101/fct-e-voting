@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('./build/assets/fctLogo.png') }}">
     <title>Voter Accreditation - E-Vote Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -89,8 +90,7 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
                     <a href="/" class="flex items-center gap-3 text-2xl text-gray-600 hover:text-gray-800">
-                        <img src="{{ asset('build/assets/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
-
+                        <img src="{{ asset('./build/assets/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
                     </a>
                     <h1 class="text-2xl font-bold text-blue-600">FCT e-Voting</h1>
                 </div>
@@ -107,9 +107,47 @@
                     Request accreditation to participate in restricted elections
                 </p>
             </div>
+
+            <!-- Accreditation Time Status -->
+            @if(isset($setting) && $setting->accreditation_start_time && $setting->accreditation_end_time)
+                @if($isAccreditationActive)
+                    <div class="bg-green-50 border-2 border-green-300 rounded-xl p-6 mb-8">
+                        <div class="flex items-start">
+                            <svg class="w-8 h-8 text-green-600 mr-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                            </svg>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-green-900 mb-2">Accreditation is Open</h3>
+                                <p class="text-green-800 mb-3">You can request your accreditation token now.</p>
+                                <div class="text-sm text-green-700 space-y-1">
+                                    <p><strong>Started:</strong> {{ $setting->accreditation_start_time->format('F j, Y \a\t g:i A') }}</p>
+                                    <p><strong>Ends:</strong> {{ $setting->accreditation_end_time->format('F j, Y \a\t g:i A') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="bg-red-50 border-2 border-red-300 rounded-xl p-6 mb-8">
+                        <div class="flex items-start">
+                            <svg class="w-8 h-8 text-red-600 mr-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                            </svg>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-red-900 mb-2">Accreditation Not Available</h3>
+                                <p class="text-red-800 mb-3">{{ $accreditationMessage }}</p>
+                                <div class="text-sm text-red-700 space-y-1">
+                                    <p><strong>Opens:</strong> {{ $setting->accreditation_start_time->format('F j, Y \a\t g:i A') }}</p>
+                                    <p><strong>Closes:</strong> {{ $setting->accreditation_end_time->format('F j, Y \a\t g:i A') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @endif
+
             @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                    <ul class="list-disc list-inside text-red-700 space-y-1">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
@@ -224,7 +262,8 @@
                                id="practice_id"
                                name="practice_id"
                                required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               {{ !$isAccreditationActive ? 'disabled' : '' }}
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent {{ !$isAccreditationActive ? 'bg-gray-100 cursor-not-allowed' : '' }}"
                                placeholder="Enter your Practice ID">
                         @error('practice_id')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -235,9 +274,10 @@
 
                     <!-- Submit Button -->
                     <button type="submit"
-                            class="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-md flex items-center justify-center">
+                            {{ !$isAccreditationActive ? 'disabled' : '' }}
+                            class="w-full px-6 py-3 {{ $isAccreditationActive ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed' }} text-white font-medium rounded-lg transition-colors shadow-md flex items-center justify-center">
                         <span class="button-text">
-                            Submit Accreditation Request
+                            {{ $isAccreditationActive ? 'Submit Accreditation Request' : 'Accreditation Not Available' }}
                         </span>
                         <span class="button-spinner hidden">
                             <div class="spinner inline-block mr-2"></div>
@@ -250,8 +290,8 @@
             <!-- Help Section -->
             <div class="mt-8 text-center">
                 <p class="text-sm text-gray-500 mb-2">
-                    Need help with accreditation? <a href="mailto:support@evote.com" class="text-blue-600 hover:text-blue-700 font-medium">
-                    Contact Support
+                    Need help with accreditation? <a href="mailto:tobi@niprfct.org.ng" class="text-blue-600 hover:text-blue-700 font-medium">
+                    Contact Support: +2348060126048 • +2348054771414 • +2348039652051
                 </a>
                 </p>
                 <a href="{{ route('election') }}"  class="text-blue-600 hover:text-blue-700 font-medium">

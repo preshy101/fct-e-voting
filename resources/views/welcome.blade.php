@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('./build/assets/fctLogo.png') }}">
     <title>E-Vote Portal | Welcome</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -56,7 +57,7 @@
         <nav class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <a href="/" class="flex items-center gap-3 text-2xl font-bold text-blue-600">
-                    <img src="{{ asset('build/assets/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
+                    <img src="{{ asset('./build/assets/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
                     <span>FCT e-Voting</span>
                 </a>
 
@@ -158,9 +159,14 @@
 
         <!-- Welcome Text -->
         <section class="text-center mb-12">
+            <h1 style="color: red">Accreditation Token can only be used once to securely cast your vote</h1>
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">
                 Welcome to the secure online voting portal. Please select an election category below to cast your vote.
             </p>
+
+            <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8">
+                Vote in All Election
+            </h2>
             <div class="mt-6">
                 <a href="{{ route('election.all') }}" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold text-lg rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                     <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -174,7 +180,7 @@
         <!-- Election Categories Section -->
         <section class="mt-12 md:mt-16">
             <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8">
-                Choose Election
+                Vote only in a single Election
             </h2>
 
             <!-- Responsive Grid for Categories -->

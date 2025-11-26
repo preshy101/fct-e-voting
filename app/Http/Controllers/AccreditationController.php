@@ -6,6 +6,7 @@ use App\Mail\AccreditationToken;
 use App\Models\accreditation;
 use App\Models\election;
 use App\Models\member;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
@@ -23,7 +24,11 @@ class AccreditationController extends Controller
             ->where('end_date', '>=', now())
             ->get();
 
-        return view('accreditation.index', compact('elections'));
+        $isAccreditationActive = Setting::isAccreditationActive();
+        $accreditationMessage = Setting::getAccreditationStatusMessage();
+        $setting = Setting::first();
+
+        return view('accreditation.index', compact('elections', 'isAccreditationActive', 'accreditationMessage', 'setting'));
     }
 
     /**
@@ -31,6 +36,14 @@ class AccreditationController extends Controller
      */
     public function request(Request $request)
     {
+        // Check if accreditation is active
+        if (!Setting::isAccreditationActive()) {
+            $message = Setting::getAccreditationStatusMessage();
+            return back()->withErrors([
+                'practice_id' => $message ?? 'Accreditation is currently not available.'
+            ]);
+        }
+
         $validated = $request->validate([
             'practice_id' => 'required|exists:members,practice_ID',
         ]);
@@ -97,6 +110,15 @@ class AccreditationController extends Controller
      */
     public function verify(Request $request)
     {
+        // Check if accreditation is active
+        if (!Setting::isAccreditationActive()) {
+            $message = Setting::getAccreditationStatusMessage();
+            return response()->json([
+                'success' => false,
+                'message' => $message ?? 'Accreditation is currently not available.'
+            ], 403);
+        }
+
         $request->validate([
             'token' => 'required|string'
         ]);
