@@ -290,7 +290,7 @@
             <!-- Help Section -->
             <div class="mt-8 text-center">
                 <p class="text-sm text-gray-500 mb-2">
-                    Need help with accreditation? <a href="mailto:tobi@niprfct.org.ng" class="text-blue-600 hover:text-blue-700 font-medium">
+                    Need help with accreditation? <a href="mailto:info@niprfct.org.ng" class="text-blue-600 hover:text-blue-700 font-medium">
                     Contact Support: +2348060126048 • +2348054771414 • +2348039652051
                 </a>
                 </p>
