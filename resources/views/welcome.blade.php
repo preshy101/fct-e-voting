@@ -48,6 +48,26 @@
             background-color: #2563eb;
             transform: scale(1.2);
         }
+        /* Glowing Button Animation */
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.5),
+                           0 0 40px rgba(59, 130, 246, 0.3),
+                           0 0 60px rgba(59, 130, 246, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(59, 130, 246, 0.8),
+                           0 0 60px rgba(59, 130, 246, 0.5),
+                           0 0 90px rgba(59, 130, 246, 0.3);
+            }
+        }
+        .btn-glow {
+            animation: glow 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        .btn-glow:hover {
+            animation: glow 1s ease-in-out infinite;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -168,7 +188,7 @@
                 Vote in All Election
             </h2>
             <div class="mt-6">
-                <a href="{{ route('election.all') }}" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold text-lg rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                <a href="{{ route('election.all') }}" class="btn-glow inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold text-lg rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                     <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
                     </svg>
@@ -178,7 +198,7 @@
         </section>
 
         <!-- Election Categories Section -->
-        <section class="mt-12 md:mt-16">
+        {{-- <section class="mt-12 md:mt-16">
             <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8">
                 Vote only in a single Election
             </h2>
@@ -197,7 +217,7 @@
                         {{-- <button data-election="{{ $election->name }}" class="vote-button w-full px-4 py-2 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-900 transition-colors">
                             Vote Now
                         </button> --}}
-                        <a href="{{ route('election.view', ['slug' => $election->id]) }}" class=" w-full px-4 py-2 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-900 transition-colors">
+                       {{--   <a href="{{ route('election.view', ['slug' => $election->id]) }}" class=" w-full px-4 py-2 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-900 transition-colors">
                             View Election
                         </a>
                     </div>
@@ -206,11 +226,11 @@
                 {{-- @php
                 dd($elections)
                 @endphp --}}
-                @if($elections == [])
+                {{--  @if($elections == [])
                     <p class="text-gray-600">No active elections available at the moment.</p>
                 @endif
             </div>
-        </section>
+        </section> --}}
 
     </main>
 
