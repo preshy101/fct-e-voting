@@ -23,7 +23,7 @@ class VoteForm
                         ->relationship('member', 'first_name')
                     ->required(),
                 Select::make('accreditation_id')
-                        ->relationship('accreditation', 'title')
+                    ->relationship('accreditation', 'token')
                     ->required(),
                 Select::make('candidate_id')
                         ->relationship('candidate', 'first_name')

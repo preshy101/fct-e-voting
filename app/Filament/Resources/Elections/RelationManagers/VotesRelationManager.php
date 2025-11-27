@@ -25,19 +25,33 @@ class VotesRelationManager extends RelationManager
                 TextColumn::make('member_name')
                     ->label('Voter Name')
                     ->getStateUsing(fn ($record) => ($record->member->first_name ?? 'N/A') . ' ' . ($record->member->last_name ?? ''))
-                    ->searchable(['member.first_name', 'member.last_name'])
+                    ->searchable(query: function ($query, string $search) {
+                        $query->where(function ($q) use ($search) {
+                            $q->whereHas('member', function ($q2) use ($search) {
+                                $q2->where('first_name', 'like', "%{$search}%")
+                                   ->orWhere('last_name', 'like', "%{$search}%")
+                                   ->orWhere('practice_ID', 'like', "%{$search}%")
+                                   ->orWhere('email', 'like', "%{$search}%");
+                            })
+                            ->orWhereHas('candidate', function ($q3) use ($search) {
+                                $q3->where('first_name', 'like', "%{$search}%")
+                                   ->orWhere('last_name', 'like', "%{$search}%");
+                            })
+                            ->orWhereHas('accreditation', function ($q4) use ($search) {
+                                $q4->where('token', 'like', "%{$search}%");
+                            });
+                        });
+                    })
                     ->sortable()
                     ->weight('semibold'),
 
                 TextColumn::make('member.practice_ID')
                     ->label('Practice ID')
-                    ->searchable()
                     ->badge()
                     ->color('primary'),
 
                 TextColumn::make('member.email')
                     ->label('Email')
-                    ->searchable()
                     ->icon('heroicon-o-envelope')
                     ->copyable()
                     ->copyMessage('Email copied'),
@@ -45,14 +59,12 @@ class VotesRelationManager extends RelationManager
                 TextColumn::make('candidate_name')
                     ->label('Voted For')
                     ->getStateUsing(fn ($record) => ($record->candidate->first_name ?? 'N/A') . ' ' . ($record->candidate->last_name ?? ''))
-                    ->searchable(['candidate.first_name', 'candidate.last_name'])
                     ->sortable()
                     ->weight('bold')
                     ->color('success'),
 
                 TextColumn::make('accreditation.token')
                     ->label('Token')
-                    ->searchable()
                     ->badge()
                     ->color('warning')
                     ->copyable()

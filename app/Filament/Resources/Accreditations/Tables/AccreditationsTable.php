@@ -16,7 +16,7 @@ class AccreditationsTable
     {
         return $table
             ->columns([
-                TextColumn::make('member.first_name')
+                TextColumn::make('member.first_name')->searchable()
                     ->sortable(),
                 TextColumn::make('token')
                     ->searchable(),

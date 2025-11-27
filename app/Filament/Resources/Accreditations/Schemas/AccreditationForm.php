@@ -25,18 +25,17 @@ class AccreditationForm
                 ->relationship('election', 'title'),
 
                 Select::make('member_id')
-                ->relationship('member', 'first_name')
-                    ->required()->label('Member')
-                    ->numeric(),
-                TextInput::make('title')
-                    ->required(),
+                ->relationship('member', 'first_name')->searchable()
+                    ->required()->label('Member'),
+                // TextInput::make('title')
+                //     ->required(),
                 TextInput::make('token')
                     ->required(),
 
-                TextInput::make('note')
-                    ->default(null),
-                TextInput::make('type')
-                    ->default(null),
+                // TextInput::make('note')
+                //     ->default(null),
+                // TextInput::make('type')
+                //     ->default(null),
                 Toggle::make('is_used')
                     ->required(),
                 DateTimePicker::make('used_at'),

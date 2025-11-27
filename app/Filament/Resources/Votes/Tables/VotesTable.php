@@ -19,10 +19,10 @@ class VotesTable
                     ->dateTime()
                     ->sortable() ,
                 TextColumn::make('election.title')
-                    ->numeric()
+                    ->numeric()->searchable()
                     ->sortable(),
                 TextColumn::make('member.first_name')
-                    ->numeric()
+                    ->numeric()->searchable()
                     ->sortable(),
                 TextColumn::make('accreditation_id')
                     ->numeric()
