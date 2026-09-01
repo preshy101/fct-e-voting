@@ -27,7 +27,7 @@ class SendVoteLink extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'NIPR-FCT Your Secure Link To Vote',
+            subject: 'e-Voting Your Secure Link To Vote',
         );
     }
 

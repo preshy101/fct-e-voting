@@ -3,111 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="{{ asset('js/fctLogo.png') }}">
-    <title>Vote Cast Successfully - E-Vote Portal</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/federal_logo.jpeg') }}">
+    <title>Vote Cast Successfully E-Voting Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
+        .btn-brand {
+            background: linear-gradient(135deg, #008751 0%, #005a36 100%);
+            transition: all 0.25s ease;
+        }
+        .btn-brand:hover {
+            background: linear-gradient(135deg, #00a865 0%, #006b40 100%);
+            box-shadow: 0 10px 25px -5px rgba(0, 135, 81, 0.4);
+        }
     </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Header -->
-    <header class="bg-white shadow-sm">
-        <nav class="container mx-auto px-6 py-4">
-           <div class="flex items-center justify-between">
-                <a href="/" class="flex items-center gap-3 text-2xl font-bold text-blue-600">
-                    <img src="{{ asset('js/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
-                    <span>FCT e-Voting</span>
-                </a>
+<body class="bg-slate-50 min-h-screen flex flex-col text-slate-800">
 
+    <!-- Header -->
+    <header class="bg-white border-b border-emerald-100 shadow-sm">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="/" class="flex items-center space-x-2.5">
+                    <img src="{{ asset('images/federal_logo.jpeg') }}" width="36" height="36" alt=" Logo" class="h-9 w-auto">
+                    <span class="text-lg font-extrabold text-slate-900">E-Voting System</span>
+                </a>
             </div>
         </nav>
     </header>
 
-    <div class="container mx-auto px-6 py-12">
-        <div class="max-w-2xl mx-auto">
+    <div class="flex-grow container mx-auto px-6 py-12">
+        <div class="max-w-xl mx-auto">
             <!-- Success Card -->
-            <div class="bg-white rounded-xl shadow-lg p-8 text-center">
-                <!-- Success Icon -->
-                <div class="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                    <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            <div class="bg-white rounded-3xl border border-emerald-100 shadow-2xl p-8 md:p-10 text-center">
+                <div class="mx-auto w-18 h-18 bg-emerald-100 rounded-full flex items-center justify-center mb-6 p-4">
+                    <svg class="w-10 h-10 text-[#008751]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
                     </svg>
                 </div>
 
-                <h1 class="text-3xl font-bold text-gray-900 mb-4">Vote Cast Successfully!</h1>
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-[#00683e] text-xs font-bold uppercase tracking-wider mb-3">
+                    Certified Ballot
+                </div>
+                <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">Vote Cast Successfully!</h1>
 
-                <p class="text-lg text-gray-600 mb-6">
-                    Thank you for participating in <span class="font-semibold text-gray-900">{{ $election->title }}</span>
+                <p class="text-xs md:text-sm text-slate-600 mb-6">
+                    Thank you for casting your vote in <strong class="text-slate-900">{{ $election->title }}</strong>
                 </p>
 
                 <!-- Vote Reference -->
-                <div class="bg-gray-50 border-2 border-gray-200 rounded-lg p-6 mb-8">
-                    <p class="text-sm text-gray-500 mb-2">Your Vote Reference Number</p>
-                    <p class="text-3xl font-bold text-blue-600 tracking-wider">{{ $vote_reference }}</p>
-                    <p class="text-sm text-gray-500 mt-4">
-                        Please save this reference number for your records. You can use it to verify your vote was counted.
+                <div class="bg-emerald-50/70 border-2 border-emerald-200 rounded-2xl p-6 mb-8">
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Cryptographic Vote Reference Number</p>
+                    <p class="text-2xl md:text-3xl font-black text-[#008751] font-mono tracking-widest">{{ $vote_reference }}</p>
+                    <p class="text-[11px] text-slate-500 mt-3">
+                        Please save this reference number for your audit records.
                     </p>
                 </div>
 
-                <!-- Important Information -->
-                <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8 text-left">
-                    <h3 class="font-semibold text-blue-900 mb-3 flex items-center">
-                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                        </svg>
-                        Important Information
-                    </h3>
-                    <ul class="space-y-2 text-sm text-blue-800">
-                        <li class="flex items-start">
-                            <span class="mr-2">•</span>
-                            <span>Your vote has been securely recorded and encrypted</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2">•</span>
-                            <span>You cannot change your vote once submitted</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2">•</span>
-                            <span>Election results will be announced after the voting period ends</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2">•</span>
-                            <span>A confirmation email has been sent to your registered email address</span>
-                        </li>
-                    </ul>
-                </div>
-
                 <!-- Action Buttons -->
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
                     <a href="{{ route('election.result', $election->id) }}"
-                       class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                        View Live Results
+                       class="px-6 py-3 btn-brand text-white text-xs font-bold rounded-xl shadow-md transition">
+                        View Election Results
                     </a>
                     <a href="/"
-                       class="px-6 py-3 bg-gray-200 text-gray-800 font-medium rounded-lg hover:bg-gray-300 transition-colors">
+                       class="px-6 py-3 bg-slate-100 text-slate-700 text-xs font-bold rounded-xl hover:bg-slate-200 transition">
                         Return to Home
                     </a>
                 </div>
-            </div>
-
-            <!-- Additional Info -->
-            <div class="mt-8 text-center">
-                <p class="text-sm text-gray-500">
-                    Questions or concerns? Contact the election administrator.
-                </p>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 mt-12">
-        <div class="container mx-auto px-6 py-6 text-center text-gray-500">
-            <p>&copy; 2025 E-Vote Portal. All rights reserved.</p>
+    <footer class="bg-white border-t border-slate-200 py-6">
+        <div class="container mx-auto px-6 text-center text-xs text-slate-500">
+            <p>&copy; {{ date('Y') }}  E-Voting Portal. All rights reserved.</p>
         </div>
     </footer>
+
 </body>
 </html>

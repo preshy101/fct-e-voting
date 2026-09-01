@@ -103,6 +103,7 @@ class CandidatesRelationManager extends RelationManager
                     ->icon('heroicon-o-users')
                     ->color('info')
                     ->slideOver()
+                    ->modalWidth('4xl')
                     ->modalHeading(fn (Model $record): string => 'Voters for ' . $record->first_name . ' ' . $record->last_name)
                     ->modalContent(fn (Model $record): \Illuminate\Contracts\View\View => view('filament.modals.candidate-voters', [
                         'voters' => vote::where('election_id', $this->getOwnerRecord()->id)

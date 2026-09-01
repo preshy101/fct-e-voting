@@ -3,21 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vote Successful - E-Vote Portal</title>
+    <title>Ballots Cast Successfully — E-Voting Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-     <link rel="icon" type="image/png" href="{{ asset('js/fctLogo.png') }}">
-   <style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('images/federal_logo.jpeg') }}">
+    <style>
         body {
             font-family: 'Inter', sans-serif;
         }
+        .theme-gradient {
+            background: linear-gradient(135deg, #008751 0%, #004d2e 100%);
+        }
+        .btn-brand {
+            background: linear-gradient(135deg, #008751 0%, #005a36 100%);
+            transition: all 0.25s ease;
+        }
+        .btn-brand:hover {
+            background: linear-gradient(135deg, #00a865 0%, #006b40 100%);
+            box-shadow: 0 10px 25px -5px rgba(0, 135, 81, 0.4);
+        }
         @keyframes checkmark {
-            0% {
-                stroke-dashoffset: 100;
-            }
-            100% {
-                stroke-dashoffset: 0;
-            }
+            0% { stroke-dashoffset: 100; }
+            100% { stroke-dashoffset: 0; }
         }
         .checkmark-circle {
             stroke-dasharray: 166;
@@ -31,139 +38,110 @@
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-slate-50 min-h-screen flex flex-col text-slate-800">
+
     <!-- Header -->
-    <header class="bg-white shadow-sm">
+    <header class="bg-white border-b border-emerald-100 shadow-sm">
         <nav class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
-                <a href="/" class="flex items-center gap-3 text-2xl font-bold text-blue-600">
-                    <img src="{{ asset('js/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
-                    <span>FCT e-Voting</span>
+                <a href="/" class="flex items-center space-x-2.5">
+                    <img src="{{ asset('images/federal_logo.jpeg') }}" width="36" height="36" alt=" Logo" class="h-9 w-auto">
+                    <span class="text-lg font-extrabold text-slate-900">E-Voting System</span>
                 </a>
-
             </div>
         </nav>
     </header>
 
-    <div class="container mx-auto px-6 py-16">
+    <div class="flex-grow container mx-auto px-6 py-12 md:py-16">
         <div class="max-w-2xl mx-auto">
+            
             <!-- Success Card -->
-            <div class="bg-white rounded-xl shadow-2xl p-8 md:p-12 text-center">
-                <!-- Success Animation -->
-                <div class="mb-8">
-                    <svg class="w-32 h-32 mx-auto" viewBox="0 0 52 52">
-                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" stroke="#10b981" stroke-width="2"/>
-                        <path class="checkmark" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" d="M14 27l7.5 7.5L38 18"/>
+            <div class="bg-white rounded-3xl border border-emerald-100 shadow-2xl p-8 md:p-12 text-center">
+                <!-- Checkmark Animation -->
+                <div class="mb-6">
+                    <svg class="w-24 h-24 mx-auto" viewBox="0 0 52 52">
+                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" stroke="#008751" stroke-width="3"/>
+                        <path class="checkmark" fill="none" stroke="#008751" stroke-width="4" stroke-linecap="round" d="M14 27l7.5 7.5L38 18"/>
                     </svg>
                 </div>
 
-                <h1 class="text-4xl font-bold text-gray-900 mb-4">Vote Successfully Cast!</h1>
-                <p class="text-xl text-gray-600 mb-8">
-                    Thank you for participating in the democratic process. Your voice matters!
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-[#00683e] text-xs font-bold uppercase tracking-wider mb-3">
+                    Ballot Submission Certified
+                </div>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-2">Vote Successfully Cast!</h1>
+                <p class="text-xs md:text-sm text-slate-600 mb-8 max-w-md mx-auto">
+                    Thank you for participating in the democratic election. Your votes have been securely and cryptographically recorded.
                 </p>
 
-                <!-- Vote Details -->
-                <div class="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
-                    <div class="flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <h3 class="text-lg font-semibold text-green-900">Vote Confirmation</h3>
+                <!-- Vote Confirmation Box -->
+                <div class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 text-left space-y-3 text-xs">
+                    <div class="flex justify-between items-center pb-2 border-b border-emerald-100">
+                        <span class="text-slate-500 font-medium">Contests Voted:</span>
+                        <span class="font-bold text-slate-900 text-sm">{{ $votesCount }} Contests</span>
                     </div>
-
-                    <div class="space-y-3 text-left max-w-md mx-auto">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">Elections Voted:</span>
-                            <span class="font-semibold text-gray-900">{{ $votesCount }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">Submission Time:</span>
-                            <span class="font-semibold text-gray-900">{{ now()->format('M d, Y h:i A') }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">Status:</span>
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                                <span class="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
-                                Confirmed
-                            </span>
-                        </div>
+                    <div class="flex justify-between items-center pb-2 border-b border-emerald-100">
+                        <span class="text-slate-500 font-medium">Timestamp:</span>
+                        <span class="font-semibold text-slate-800">{{ now()->format('M d, Y h:i A') }}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-500 font-medium">Confirmation Status:</span>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-200 text-[#005a36]">
+                            <span class="w-1.5 h-1.5 bg-[#008751] rounded-full mr-1.5"></span>
+                            Encrypted & Confirmed
+                        </span>
                     </div>
                 </div>
 
-                <!-- Email Confirmation Notice -->
-                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
-                    <div class="flex items-start">
-                        <svg class="w-5 h-5 text-blue-600 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                        </svg>
-                        <p class="text-sm text-blue-900">
-                            A confirmation email has been sent to <strong>{{ $memberEmail }}</strong> with the details of your votes.
-                        </p>
-                    </div>
+                <!-- Email Notice -->
+                @if(isset($memberEmail))
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-8 text-left flex items-start text-xs text-slate-600">
+                    <svg class="w-4 h-4 text-[#008751] mr-2.5 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    <p>A digital receipt and confirmation email has been dispatched to <strong>{{ $memberEmail }}</strong>.</p>
                 </div>
+                @endif
 
-                <!-- Elections List -->
+                <!-- Ballots List -->
+                @if(isset($votes) && count($votes) > 0)
                 <div class="text-left mb-8">
-                    <h4 class="text-lg font-semibold text-gray-900 mb-4">Your Votes:</h4>
-                    <div class="space-y-3">
+                    <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3">Your Ballots Breakdown:</h3>
+                    <div class="space-y-2.5">
                         @foreach($votes as $vote)
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200">
-                            <div class="flex-1">
-                                <p class="font-medium text-gray-900">{{ $vote['election_title'] }}</p>
-                                <p class="text-sm text-gray-600">Candidate: {{ $vote['candidate_name'] }}</p>
+                        <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+                            <div>
+                                <p class="font-bold text-slate-900">{{ $vote['election_title'] }}</p>
+                                <p class="text-slate-500 text-[11px]">Selected: <strong class="text-[#008751]">{{ $vote['candidate_name'] }}</strong></p>
                             </div>
-                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
+                            <span class="w-5 h-5 rounded-full bg-emerald-100 text-[#008751] flex items-center justify-center flex-shrink-0">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </span>
                         </div>
                         @endforeach
                     </div>
                 </div>
+                @endif
 
-                <!-- Important Information -->
-                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8">
-                    <div class="flex items-start">
-                        <svg class="w-5 h-5 text-yellow-600 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <div class="text-left">
-                            <p class="text-sm font-semibold text-yellow-900 mb-1">Important:</p>
-                            <ul class="text-sm text-yellow-900 space-y-1">
-                                <li>• Your vote is confidential and secure</li>
-                                <li>• You cannot change your vote once submitted</li>
-                                <li>• Keep your confirmation email for your records</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <!-- Actions -->
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
                     <a href="{{ route('election') }}"
-                       class="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg">
-                        Return to Home
+                       class="px-8 py-3.5 btn-brand text-white font-bold text-xs rounded-xl shadow-md transition">
+                        Return to Elections
                     </a>
-                    {{-- @if($allowResultPreview == true)
-                    <a href="{{ route('election.result', ['id' => $votes[0]['election_id']]) }}"
-                       class="px-8 py-3 bg-white text-blue-600 font-semibold rounded-lg border-2 border-blue-600 hover:bg-blue-50 transition-colors">
-                        View Results
-                    </a>
-                    @endif --}}
                 </div>
-            </div>
 
-            <!-- Additional Information -->
-            <div class="mt-8 text-center text-sm text-gray-600">
-                <p>If you have any questions or concerns, please contact the election administrator.</p>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 mt-12">
-        <div class="container mx-auto px-6 py-6 text-center text-gray-500">
-            <p>&copy; 2025 E-Vote Portal. All rights reserved.</p>
+    <footer class="bg-white border-t border-slate-200 py-6">
+        <div class="container mx-auto px-6 text-center text-xs text-slate-500">
+            <p>&copy; {{ date('Y') }}  E-Voting Portal. All rights reserved.</p>
         </div>
     </footer>
+
 </body>
 </html>

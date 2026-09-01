@@ -27,7 +27,8 @@ class CategoryForm
                     ->afterStateUpdated(function ($set, ?string $state, $context) {
                         if ($context === 'create') {
                             $set('slug', Str::slug($state));
-                        }
+
+                            }
                     }),
                 Textarea::make('description')
                     ->default(null)
@@ -45,7 +46,9 @@ class CategoryForm
                 ->description('Manage the banner image for the election category.')
                     ->schema([
                         FileUpload::make('image')->nullable()
-                        ->image(),
+                        ->image()
+                        ->disk('public')
+                        ->directory('categories'),
                     ])->columnSpan(3)
                 ])->columns(12);
 

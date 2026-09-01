@@ -25,7 +25,7 @@ class MemberInfolist
                     ->columnSpanFull(),
                 TextEntry::make('photo')
                     ->placeholder('-'),
-                TextEntry::make('practice_ID')
+                TextEntry::make('staff_ID')
                     ->placeholder('-'),
                 TextEntry::make('created_at')
                     ->dateTime()

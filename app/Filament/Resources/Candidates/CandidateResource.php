@@ -11,18 +11,11 @@ use App\Filament\Resources\Candidates\Schemas\CandidateInfolist;
 use App\Filament\Resources\Candidates\Tables\CandidatesTable;
 use App\Models\candidate;
 use BackedEnum;
-use Filament\Actions\Action;
-use Filament\Actions\BulkAction;
-use Filament\Actions\BulkActionGroup;
-use Illuminate\Database\Eloquent\Collection;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
-use Illuminate\Validation\Rules\Can;
+use Illuminate\Database\Eloquent\Model;
 
 class CandidateResource extends Resource
 {
@@ -31,6 +24,36 @@ class CandidateResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUser;
 
     protected static ?string $recordTitleAttribute = 'first_name';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return [
+            'first_name',
+            'last_name',
+            'email',
+            'phone_number',
+            'category.title',
+        ];
+    }
+
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return "Candidate: {$record->first_name} {$record->last_name}";
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Category' => $record->category->title ?? 'N/A',
+            'Email' => $record->email ?? 'N/A',
+            'Status' => $record->is_active ? 'Active' : 'Inactive',
+        ];
+    }
+
+    public static function getGlobalSearchResultUrl(Model $record): string
+    {
+        return CandidateResource::getUrl('view', ['record' => $record]);
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -45,8 +68,6 @@ class CandidateResource extends Resource
     public static function table(Table $table): Table
     {
         return CandidatesTable::configure($table);
-
-
     }
 
     public static function getRelations(): array

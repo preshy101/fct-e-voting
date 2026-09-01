@@ -5,12 +5,14 @@ namespace App\Filament\Widgets;
 use App\Models\election;
 use App\Models\vote;
 use Filament\Widgets\ChartWidget;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Illuminate\Support\Facades\DB;
 
 class VoteCastChart extends ChartWidget
 {
-    // protected static ?string $heading = 'Election Vote Distribution';
-     protected ?string $heading = 'Election Vote Distribution';
+    use InteractsWithPageFilters;
+
+    protected ?string $heading = 'Election Vote Distribution';
     protected static ?int $sort = 2;
     protected int | string | array $columnSpan = 'full';
 
@@ -20,7 +22,6 @@ class VoteCastChart extends ChartWidget
     {
         parent::mount();
 
-        // Set default filter to the first active election if none is selected
         if (!$this->filter) {
             $firstElection = election::where('is_active', true)
                 ->orderBy('created_at', 'desc')
@@ -34,31 +35,41 @@ class VoteCastChart extends ChartWidget
 
     protected function getData(): array
     {
+        $year = $this->filters['year'] ?? null;
         $electionId = $this->filter;
 
-        // If no filter is selected, use the first active election
+        $electionsQuery = election::query()
+            ->when($year, fn($q) => $q->where('year', $year))
+            ->orderBy('created_at', 'desc');
+
+        if ($year && $electionId) {
+            $isValid = (clone $electionsQuery)->where('id', $electionId)->exists();
+            if (!$isValid) {
+                $electionId = null;
+            }
+        }
+
         if (!$electionId) {
-            $firstElection = election::where('is_active', true)
-                ->orderBy('created_at', 'desc')
-                ->first();
+            $firstElection = (clone $electionsQuery)->first();
 
             if ($firstElection) {
                 $electionId = $firstElection->id;
+                $this->filter = (string) $electionId;
             } else {
-                // No active elections found
                 return [
                     'datasets' => [
                         [
                             'label' => 'Votes',
                             'data' => [0],
-                            'backgroundColor' => '#36A2EB',
+                            'backgroundColor' => '#008751',
                         ],
                     ],
-                    'labels' => ['No active elections available'],
+                    'labels' => [$year ? "No elections held in {$year}" : 'No elections available'],
                 ];
             }
         }
 
+        $currentElection = election::find($electionId);
         $results = vote::where('election_id', $electionId)
             ->join('candidates', 'votes.candidate_id', '=', 'candidates.id')
             ->select('candidates.first_name', 'candidates.last_name', DB::raw('COUNT(*) as votes'))
@@ -68,10 +79,10 @@ class VoteCastChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Votes',
+                    'label' => $currentElection ? "Votes for {$currentElection->title}" : 'Votes',
                     'data' => $results->pluck('votes')->toArray(),
-                    'backgroundColor' => '#36A2EB',
-                    'borderColor' => '#9BD0F5',
+                    'backgroundColor' => '#008751',
+                    'borderColor' => '#008751',
                 ],
             ],
             'labels' => $results->map(fn($item) => $item->first_name . ' ' . $item->last_name)->toArray(),
@@ -85,7 +96,11 @@ class VoteCastChart extends ChartWidget
 
     protected function getFilters(): ?array
     {
-        return election::where('is_active', true)
+        $year = $this->filters['year'] ?? null;
+        
+        return election::query()
+            ->when($year, fn($query) => $query->where('year', $year))
+            ->orderBy('created_at', 'desc')
             ->pluck('title', 'id')
             ->toArray();
     }

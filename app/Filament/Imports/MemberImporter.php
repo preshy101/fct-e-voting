@@ -26,7 +26,7 @@ class MemberImporter extends Importer
                 ->rules(['max:255']),
             ImportColumn::make('phone_number')
                 ->rules(['max:20']),
-            ImportColumn::make('practice_id')
+            ImportColumn::make('staff_id')
                 ->requiredMapping()
                 ->rules(['max:255']),
             ImportColumn::make('grade')

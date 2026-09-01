@@ -19,7 +19,7 @@ class MemberForm
                     ->description('Manage member information here.')
                       
                     ->schema([
-                TextInput::make('practice_id')
+                TextInput::make('staff_id')
                     ->required()->label('Practice ID')
                     ->default(null),
 

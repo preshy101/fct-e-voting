@@ -17,7 +17,7 @@ class VoteLinkController extends Controller
     {
         // 1. Validate the incoming request
         $validator = Validator::make($request->all(), [
-            'practice_id' => 'required|string|exists:members,practice_id',
+            'staff_id' => 'required|string|exists:members,staff_id',
             'election_id' => 'required|string|exists:elections,id'
         ]);
 
@@ -26,7 +26,7 @@ class VoteLinkController extends Controller
         }
 
         // 2. Find the voter
-        $voter = member::where('practice_ID', $request->practice_ID)->first();
+        $voter = member::where('staff_ID', $request->staff_ID)->first();
         //3. check election settings
         $setting = election::find($request->election_id);
         if($setting && !$setting->is_active){

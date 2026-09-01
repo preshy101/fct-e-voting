@@ -48,7 +48,7 @@ class MembersSampleExport implements FromArray, WithHeadings
             'other_name',
             'email',
             'phone_number',
-            'practice_id',
+            'staff_id',
             'grade'
         ];
     }

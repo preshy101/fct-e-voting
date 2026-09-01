@@ -21,6 +21,7 @@ class CandidatesTable
         return $table
             ->columns([
             ImageColumn::make('photo')
+                ->disk('public')
                 ->circular(),
             TextColumn::make('category.title')
                 ->label('Category')

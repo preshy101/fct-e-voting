@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('votes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('election_id')->constrained('elections')->onDelete('cascade');
-            $table->foreignId('member_id')->constrained('members')->onDelete('cascade');
-            $table->foreignId('accreditation_id')->constrained('accreditations')->onDelete('cascade')->nullable();
-            $table->foreignId('candidate_id')->constrained('candidates')->onDelete('cascade');
+            $table->foreignId('election_id')->constrained('elections')->cascadeOnDelete();
+            $table->foreignId('member_id')->constrained('members')->cascadeOnDelete();
+            $table->foreignId('accreditation_id')->nullable()->constrained('accreditations')->cascadeOnDelete();
+            $table->foreignId('candidate_id')->constrained('candidates')->cascadeOnDelete();
             $table->string('token')->nullable();
             $table->timestamps();
         });

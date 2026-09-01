@@ -22,15 +22,15 @@ class VotesRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                TextColumn::make('member_name')
+                TextColumn::make('member.first_name')
                     ->label('Voter Name')
-                    ->getStateUsing(fn ($record) => ($record->member->first_name ?? 'N/A') . ' ' . ($record->member->last_name ?? ''))
+                    ->formatStateUsing(fn ($state, $record) => ($record->member->first_name ?? 'N/A') . ' ' . ($record->member->last_name ?? ''))
                     ->searchable(query: function ($query, string $search) {
                         $query->where(function ($q) use ($search) {
                             $q->whereHas('member', function ($q2) use ($search) {
                                 $q2->where('first_name', 'like', "%{$search}%")
                                    ->orWhere('last_name', 'like', "%{$search}%")
-                                   ->orWhere('practice_ID', 'like', "%{$search}%")
+                                   ->orWhere('staff_ID', 'like', "%{$search}%")
                                    ->orWhere('email', 'like', "%{$search}%");
                             })
                             ->orWhereHas('candidate', function ($q3) use ($search) {
@@ -45,10 +45,11 @@ class VotesRelationManager extends RelationManager
                     ->sortable()
                     ->weight('semibold'),
 
-                TextColumn::make('member.practice_ID')
+                TextColumn::make('member.staff_ID')
                     ->label('Practice ID')
                     ->badge()
-                    ->color('primary'),
+                    ->color('primary')
+                    ->sortable(),
 
                 TextColumn::make('member.email')
                     ->label('Email')
@@ -56,9 +57,9 @@ class VotesRelationManager extends RelationManager
                     ->copyable()
                     ->copyMessage('Email copied'),
 
-                TextColumn::make('candidate_name')
+                TextColumn::make('candidate.first_name')
                     ->label('Voted For')
-                    ->getStateUsing(fn ($record) => ($record->candidate->first_name ?? 'N/A') . ' ' . ($record->candidate->last_name ?? ''))
+                    ->formatStateUsing(fn ($state, $record) => ($record->candidate->first_name ?? 'N/A') . ' ' . ($record->candidate->last_name ?? ''))
                     ->sortable()
                     ->weight('bold')
                     ->color('success'),

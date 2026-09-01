@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('candidate_election', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('candidate_id')->constrained('candidates')->onDelete('cascade');
-            $table->foreignId('election_id')->constrained('elections')->onDelete('cascade');
+            $table->foreignId('candidate_id')->constrained('candidates')->cascadeOnDelete();
+            $table->foreignId('election_id')->constrained('elections')->cascadeOnDelete();
             $table->timestamps();
 
             // Ensure a candidate can only be added once per election

@@ -26,6 +26,8 @@ class CategoryResource extends Resource
 
     protected static string | UnitEnum | null $navigationGroup = 'Election Management';
 
+    protected static ?int $navigationSort = 1;
+
     public static function form(Schema $schema): Schema
     {
         return CategoryForm::configure($schema);

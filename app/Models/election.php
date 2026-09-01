@@ -10,6 +10,8 @@ class election extends Model
         'title',
         'description',
         'category_id',
+        'year',
+        'preview_enabled',
         'start_date',
         'end_date',
         'is_active',
@@ -20,6 +22,7 @@ class election extends Model
     protected $casts = [
         'election_rules' => 'array',
         'is_active' => 'boolean',
+        'preview_enabled' => 'boolean',
         'start_date' => 'datetime',
         'end_date' => 'datetime'
     ];

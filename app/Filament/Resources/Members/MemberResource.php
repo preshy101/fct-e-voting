@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class MemberResource extends Resource
 {
@@ -24,12 +25,35 @@ class MemberResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'first_name';
 
-    // protected function getHeaderActions(): array
-    //     {
-    //         return [
+    public static function getGloballySearchableAttributes(): array
+    {
+        return [
+            'first_name',
+            'last_name',
+            'staff_ID',
+            'email',
+            'phone_number',
+        ];
+    }
 
-    //         ];
-    //     }
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return "Member: {$record->first_name} {$record->last_name} ({$record->staff_ID})";
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Practice ID' => $record->staff_ID,
+            'Email' => $record->email ?? 'N/A',
+            'Phone' => $record->phone_number ?? 'N/A',
+        ];
+    }
+
+    public static function getGlobalSearchResultUrl(Model $record): string
+    {
+        return MemberResource::getUrl('view', ['record' => $record]);
+    }
 
     public static function form(Schema $schema): Schema
     {

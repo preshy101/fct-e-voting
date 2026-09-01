@@ -12,7 +12,7 @@ class member extends Model
         'other_name',
         'email',
         'phone_number',
-        'practice_ID',
+        'staff_ID',
         'grade',
         'photo'
     ];

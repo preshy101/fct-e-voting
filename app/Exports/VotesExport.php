@@ -46,7 +46,7 @@ class VotesExport implements FromCollection, WithHeadings, WithMapping, WithTitl
             $vote->member->first_name ?? 'N/A',
             $vote->member->last_name ?? '',
             $vote->member->email ?? 'N/A',
-            $vote->member->practice_ID ?? 'N/A',
+            $vote->member->staff_ID ?? 'N/A',
             $vote->candidate->first_name ?? 'N/A',
             $vote->candidate->last_name ?? '',
             $vote->accreditation->token ?? 'N/A',

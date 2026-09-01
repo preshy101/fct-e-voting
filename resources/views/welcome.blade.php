@@ -3,423 +3,343 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="{{ asset('js/fctLogo.png') }}">
-    <title>E-Vote Portal | Welcome</title>
-    <!-- Load Tailwind CSS -->
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/federal_logo.jpeg') }}">
+    <title>Active Elections — e-Voting System</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Inter font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* Apply Inter font */
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Custom styles for modal transition (optional but nice) */
-        .modal {
-            transition: opacity 0.25s ease;
+        .theme-gradient {
+            background: linear-gradient(135deg, #008751 0%, #004d2e 100%);
         }
-        .modal-content {
-            transition: transform 0.25s ease;
-        }
-        /* Carousel Styles */
         .carousel-container {
             position: relative;
             overflow: hidden;
         }
         .carousel-track {
             display: flex;
-            transition: transform 0.5s ease-in-out;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .carousel-slide {
             min-width: 100%;
             transition: opacity 0.5s ease-in-out;
         }
         .carousel-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: #cbd5e1;
+            width: 10px;
+            height: 10px;
+            border-radius: 9999px;
+            background-color: rgba(255, 255, 255, 0.4);
             cursor: pointer;
             transition: all 0.3s ease;
         }
         .carousel-dot.active {
-            background-color: #2563eb;
-            transform: scale(1.2);
+            background-color: #ffffff;
+            width: 28px;
         }
-        /* Glowing Button Animation */
-        @keyframes glow {
+        @keyframes emeraldGlow {
             0%, 100% {
-                box-shadow: 0 0 20px rgba(59, 130, 246, 0.5),
-                           0 0 40px rgba(59, 130, 246, 0.3),
-                           0 0 60px rgba(59, 130, 246, 0.2);
+                box-shadow: 0 0 20px rgba(0, 135, 81, 0.4), 0 0 40px rgba(0, 135, 81, 0.2);
             }
             50% {
-                box-shadow: 0 0 30px rgba(59, 130, 246, 0.8),
-                           0 0 60px rgba(59, 130, 246, 0.5),
-                           0 0 90px rgba(59, 130, 246, 0.3);
+                box-shadow: 0 0 30px rgba(0, 135, 81, 0.7), 0 0 60px rgba(0, 135, 81, 0.4);
             }
         }
-        .btn-glow {
-            animation: glow 2s ease-in-out infinite;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        .btn-glow-emerald {
+            animation: emeraldGlow 2.5s ease-in-out infinite;
         }
-        .btn-glow:hover {
-            animation: glow 1s ease-in-out infinite;
+        .btn-glow-emerald:hover {
+            animation: none;
+            box-shadow: 0 12px 30px rgba(0, 135, 81, 0.5);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 135, 81, 0.1), 0 8px 10px -6px rgba(0, 135, 81, 0.1);
+        }
+        .pulse-live {
+            animation: livePulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .4; transform: scale(1.15); }
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
     <!-- Header Navigation -->
-    <header class="bg-white shadow-sm">
+    <header class="bg-white border-b border-emerald-100 sticky top-0 z-40 shadow-sm">
         <nav class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
-                <a href="/" class="flex items-center gap-3 text-2xl font-bold text-blue-600">
-                    <img src="{{ asset('js/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
-                    <span>FCT e-Voting</span>
+                <a href="/" class="flex items-center space-x-3 group">
+                    <img src="{{ asset('images/federal_logo.jpeg') }}" width="44" height="44" alt="Logo" class="h-10 w-auto object-contain">
+                    <div>
+                        <div class="text-xl font-extrabold text-slate-900 tracking-tight flex items-center gap-1">
+                            <span>e</span><span class="text-[#008751]">-Voting System</span>
+                        </div>
+                        <div class="text-[11px] text-slate-500 font-medium hidden sm:block">Democratic & Certified Voting System</div>
+                    </div>
                 </a>
 
+                <div class="flex items-center space-x-3">
+                    <a href="{{ route('election.live.results') }}" class="px-4 py-2 text-sm font-semibold text-rose-600 hover:bg-rose-50 rounded-xl transition inline-flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-rose-500 pulse-live"></span>
+                        Live Results
+                    </a>
+                    <a href="{{ route('accreditation.index') }}" class="px-4 py-2 text-sm font-semibold text-[#008751] hover:bg-emerald-50 rounded-xl transition">
+                        Get Accredited
+                    </a>
+                    <!-- <a href="{{ route('election.all') }}" class="inline-flex items-center px-4 py-2 bg-[#008751] hover:bg-[#00683e] text-white text-sm font-bold rounded-xl shadow transition">
+                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                        </svg>
+                        Vote All
+                    </a> -->
+                </div>
             </div>
         </nav>
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-6 py-6 md:py-10">
+    <main class="flex-grow container mx-auto px-6 py-8 md:py-12 max-w-6xl">
 
-        <!-- Hero Section with Carousel -->
-        <section class="mb-16">
-            <div class="carousel-container max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-2xl">
+        <!-- Hero Carousel Section -->
+        <section class="mb-12">
+            <div class="carousel-container rounded-3xl overflow-hidden shadow-2xl border border-emerald-800/20">
                 <div class="carousel-track">
                     <!-- Slide 1 -->
                     <div class="carousel-slide">
-                        <div class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white p-12 md:p-20">
-                            <div class="max-w-2xl">
-                                <h2 class="text-4xl md:text-5xl font-bold mb-4 mt-5">Your Voice, Your Vote</h2>
-                                <p class="text-xl md:text-2xl mb-6">Participate in secure and transparent democratic elections</p>
-                                <div class="flex items-center space-x-4">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                    </svg>
-                                    <span class="text-lg">100% Secure & Confidential</span>
+                        <div class="relative theme-gradient text-white p-10 md:p-16">
+                            <div class="absolute -right-10 -bottom-10 w-80 h-80 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+                            <div class="max-w-2xl relative z-10">
+                                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 backdrop-blur-sm text-xs font-semibold uppercase tracking-wider mb-4 border border-emerald-400/30 text-emerald-300">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    Certified & Secure
                                 </div>
-                            </div>
-                            <div class="absolute bottom-0 right-0 opacity-10">
-                                <svg class="w-64 h-64" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
-                                </svg>
+                                <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-3">Vote with Integrity</h1>
+                                <p class="text-lg md:text-xl text-emerald-100 mb-6">Each ballot is encrypted, authenticated, and accounted for with total transparency.</p>
+                                <div class="flex items-center space-x-6 text-sm text-emerald-200 font-medium">
+                                    <div class="flex items-center">
+                                        <svg class="w-5 h-5 mr-1.5 text-emerald-300" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <span>Verified Accuracy</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <svg class="w-5 h-5 mr-1.5 text-emerald-300" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <span>End-to-End Cryptography</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Slide 2 -->
                     <div class="carousel-slide">
-                        <div class="relative bg-gradient-to-r from-indigo-600 to-purple-700 text-white p-12 md:p-20">
-                            <div class="max-w-2xl">
-                                <h2 class="text-4xl md:text-5xl font-bold mb-4 mt-5">Easy & Convenient</h2>
-                                <p class="text-xl md:text-2xl mb-6">Vote from anywhere, anytime with just a few clicks</p>
-                                <div class="flex items-center space-x-4">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
-                                    </svg>
-                                    <span class="text-lg">Fast & Efficient Process</span>
+                        <div class="relative bg-gradient-to-r from-slate-900 via-slate-800 to-[#004d2e] text-white p-10 md:p-16">
+                            <div class="absolute -right-10 -bottom-10 w-80 h-80 bg-[#008751]/20 rounded-full blur-3xl pointer-events-none"></div>
+                            <div class="max-w-2xl relative z-10">
+                                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 backdrop-blur-sm text-xs font-semibold uppercase tracking-wider mb-4 border border-emerald-400/30 text-emerald-300">
+                                    Fast & Mobile Ready
                                 </div>
-                            </div>
-                            <div class="absolute bottom-0 right-0 opacity-10">
-                                <svg class="w-64 h-64" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 3 -->
-                    <div class="carousel-slide">
-                        <div class="relative bg-gradient-to-r from-green-600 to-teal-700 text-white p-12 md:p-20">
-                            <div class="max-w-2xl">
-                                <h2 class="text-4xl md:text-5xl font-bold mb-4 mt-5">Make a Difference</h2>
-                                <p class="text-xl md:text-2xl mb-6">Every vote counts in shaping our collective future</p>
-                                <div class="flex items-center space-x-4">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                    </svg>
-                                    <span class="text-lg">Trusted & Reliable</span>
+                                <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-3">Vote from Anywhere</h2>
+                                <p class="text-lg md:text-xl text-slate-300 mb-6">Vote securely on your phone, tablet, or desktop in just a few simple clicks.</p>
+                                <div class="flex items-center space-x-6 text-sm text-emerald-200 font-medium">
+                                    <div class="flex items-center">
+                                        <svg class="w-5 h-5 mr-1.5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <span>Instant Verification</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="absolute bottom-0 right-0 opacity-10">
-                                <svg class="w-64 h-64" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
-                                </svg>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Navigation Arrows -->
-                <button id="carousel-prev" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg transition-all">
-                    <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button id="carousel-prev" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/60 text-white rounded-full p-2.5 backdrop-blur-sm transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                 </button>
-                <button id="carousel-next" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg transition-all">
-                    <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button id="carousel-next" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/60 text-white rounded-full p-2.5 backdrop-blur-sm transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
                 </button>
 
                 <!-- Dots Indicators -->
-                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3">
+                <div class="absolute bottom-5 left-1/2 -translate-x-1/2 flex space-x-2">
                     <button class="carousel-dot active" data-slide="0"></button>
                     <button class="carousel-dot" data-slide="1"></button>
-                    <button class="carousel-dot" data-slide="2"></button>
                 </div>
             </div>
-        </section>
-
-        <!-- Welcome Text -->
-        <section class="text-center mb-12">
-            <h1 style="color: red">Accreditation Token can only be used once to securely cast your vote</h1>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                Welcome to the secure online voting portal. Please select an election category below to cast your vote.
+        <!-- Main Call To Action / Multi-Vote Ballot -->
+        <section class="bg-white rounded-3xl p-8 border border-emerald-100 shadow-md mb-12 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-semibold border border-amber-200 mb-4">
+                <svg class="w-4 h-4 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+                <span>Accreditation Required for Voting</span>
+            </div>
+            
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-3">Vote in All Active Elections in One Step</h2>
+            <p class="text-slate-600 text-sm max-w-xl mx-auto mb-6 leading-relaxed">
+                Save time by completing your votes across all active categories in a single secure ballot session.
             </p>
 
-            <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8">
-                Vote in All Election
-            </h2>
-            <div class="mt-6">
-                <a href="{{ route('election.all') }}" class="btn-glow inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold text-lg rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
-                    </svg>
-                    Vote in All Elections
-                </a>
-            </div>
+            <a href="{{ route('election.all') }}" class="inline-flex items-center px-8 py-4 bg-[#008751] hover:bg-[#00683e] text-white font-bold rounded-2xl shadow-lg transition btn-glow-emerald transform hover:-translate-y-0.5">
+                <span>Open Multi-Election Ballot</span>
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
+            </a>
         </section>
 
-        <!-- Election Categories Section -->
-        {{-- <section class="mt-12 md:mt-16">
-            <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8">
-                Vote only in a single Election
-            </h2>
-
-            <!-- Responsive Grid for Categories -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-
-                @foreach($elections as $election)
-                <!-- Category Card 1 -->
-                <div class="bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">{{ $election->title }}</h3>
-                        <p class="text-gray-600 mb-6">
-                            {{ Str::limit($election->description, 50) }}
-                        </p>
-                        {{-- <button data-election="{{ $election->name }}" class="vote-button w-full px-4 py-2 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-900 transition-colors">
-                            Vote Now
-                        </button> --}}
-                       {{--   <a href="{{ route('election.view', ['slug' => $election->id]) }}" class=" w-full px-4 py-2 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-900 transition-colors">
-                            View Election
-                        </a>
-                    </div>
+        <!-- Individual Active Elections Section -->
+        <section>
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">Active Elections</h2>
+                    <p class="text-xs text-slate-500">Explore specific election categories and contestants</p>
                 </div>
-                @endforeach
-                {{-- @php
-                dd($elections)
-                @endphp --}}
-                {{--  @if($elections == [])
-                    <p class="text-gray-600">No active elections available at the moment.</p>
-                @endif
+                <div class="flex items-center space-x-3">
+                    
+                    <span class="text-xs font-bold text-[#008751] bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200">
+                        {{ count($elections ?? []) }} Available
+                    </span>
+                </div>
             </div>
-        </section> --}}
+
+            @if(isset($elections) && count($elections) > 0)
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($elections as $election)
+                    <div class="card-hover bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs font-bold uppercase tracking-wider text-[#008751] bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100">
+                                    {{ $election->category->title ?? 'General' }}
+                                </span>
+                                <span class="inline-flex items-center text-xs font-semibold text-emerald-700">
+                                    <span class="w-2 h-2 rounded-full bg-[#008751] mr-1.5"></span>
+                                    Active
+                                </span>
+                            </div>
+
+                            <h3 class="text-lg font-bold text-slate-900 mb-2">{{ $election->title }}</h3>
+                            <p class="text-xs text-slate-500 mb-4 line-clamp-2">
+                                {{ $election->description ?? 'Democratic election contest for members.' }}
+                            </p>
+
+                            <div class="space-y-1.5 text-xs text-slate-600 border-t border-slate-100 pt-3">
+                                <div class="flex items-center justify-between">
+                                    <span>Closes:</span>
+                                    <span class="font-semibold text-slate-800">{{ \Carbon\Carbon::parse($election->end_date)->format('M d, h:i A') }}</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span>Contestants:</span>
+                                    <span class="font-semibold text-slate-800">{{ $election->candidates->count() }} Candidates</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-6 pt-0 space-y-2">
+                            <a href="{{ route('election.view', ['slug' => $election->id]) }}" class="w-full inline-flex items-center justify-center py-2.5 px-4 bg-slate-900 hover:bg-[#008751] text-white text-xs font-bold rounded-xl transition duration-200 shadow-sm">
+                                <span>Vote in this Election</span>
+                                <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                                </svg>
+                            </a>
+                            <a href="{{ route('election.result', $election->id) }}" class="w-full inline-flex items-center justify-center py-2 px-4 bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-[#008751] text-xs font-semibold rounded-xl border border-slate-200 transition">
+                                <span>View Results & Tally</span>
+                            </a>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="bg-white rounded-2xl p-12 text-center border border-slate-200">
+                    <svg class="w-16 h-16 mx-auto text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                    </svg>
+                    <h3 class="text-lg font-bold text-slate-800 mb-1">No Active Elections Right Now</h3>
+                    <p class="text-sm text-slate-500">Upcoming elections will be published here once voting opens.</p>
+                </div>
+            @endif
+        </section>
 
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 mt-12 md:mt-20">
-        <div class="container mx-auto px-6 py-6 text-center text-gray-500">
-            <p>&copy; 2025 E-Vote Portal. All rights reserved.</p>
+    <footer class="bg-white border-t border-slate-200 py-8 mt-12">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <img src="{{ asset('images/federal_logo.jpeg') }}" width="32" height="32" alt="Logo" class="h-8 w-auto">
+                <span class="font-bold text-slate-800">e-Voting System</span>
+            </div>
+            <p class="text-sm text-slate-500 mb-2">&copy; {{ date('Y') }} E-Voting Portal. All rights reserved.</p>
+            <p class="text-xs text-slate-400">For support inquiries, contact your election administrator.</p>
         </div>
     </footer>
 
-    <!--
-      Modal Section
-      Initially hidden.
-    -->
-    <div id="auth-modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 hidden">
-        <div class="modal-content bg-white w-full max-w-md p-6 rounded-lg shadow-xl">
-            <!-- Modal Header -->
-            <div class="flex items-center justify-between mb-4">
-                <h3 id="modal-title" class="text-xl font-semibold text-gray-900">Voter Verification</h3>
-                <button id="modal-close" class="text-gray-400 hover:text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-
-            <!-- Modal Body -->
-            <form id="practice-id-form" action="route('vote.page')">
-                @csrf
-                <p class="text-gray-600 mb-4">
-                    To proceed with the <strong id="modal-election-name" class="font-medium text-gray-800"></strong>, please enter your Practice ID.
-                </p>
-                <div>
-                    <label for="practice_id" class="block text-sm font-medium text-gray-700 mb-1">
-                        Practice ID
-                    </label>
-                    <input type="text" id="practice_id" name="practice_id" required
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                           placeholder="Enter your Practice ID">
-                </div>
-
-                <!-- Form Actions -->
-                <div class="mt-6 flex justify-end space-x-3">
-                    <button type="button" id="modal-cancel" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors">
-                        Cancel
-                    </button>
-                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                        Submit
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- JavaScript -->
+    <!-- Carousel Logic -->
     <script>
-        // ===== Carousel Functionality =====
-        const carouselTrack = document.querySelector('.carousel-track');
-        const carouselSlides = document.querySelectorAll('.carousel-slide');
-        const carouselDots = document.querySelectorAll('.carousel-dot');
-        const prevButton = document.getElementById('carousel-prev');
-        const nextButton = document.getElementById('carousel-next');
+        const track = document.querySelector('.carousel-track');
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
+        let currentIndex = 0;
+        let autoSlideInterval;
 
-        let currentSlide = 0;
-        const totalSlides = carouselSlides.length;
-
-        // Function to update carousel position
-        const updateCarousel = () => {
-            carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-            // Update dots
-            carouselDots.forEach((dot, index) => {
-                if (index === currentSlide) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
+        function updateCarousel(index) {
+            if (index < 0) index = slides.length - 1;
+            if (index >= slides.length) index = 0;
+            currentIndex = index;
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
             });
-        };
+        }
 
-        // Next slide
-        const nextSlide = () => {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            updateCarousel();
-        };
-
-        // Previous slide
-        const prevSlide = () => {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            updateCarousel();
-        };
-
-        // Go to specific slide
-        const goToSlide = (slideIndex) => {
-            currentSlide = slideIndex;
-            updateCarousel();
-        };
-
-        // Event listeners for navigation
-        nextButton.addEventListener('click', nextSlide);
-        prevButton.addEventListener('click', prevSlide);
-
-        // Event listeners for dots
-        carouselDots.forEach((dot, index) => {
-            dot.addEventListener('click', () => goToSlide(index));
+        prevBtn.addEventListener('click', () => {
+            updateCarousel(currentIndex - 1);
+            resetAutoSlide();
         });
 
-        // Auto-advance carousel every 5 seconds
-        let autoSlideInterval = setInterval(nextSlide, 5000);
+        nextBtn.addEventListener('click', () => {
+            updateCarousel(currentIndex + 1);
+            resetAutoSlide();
+        });
 
-        // Pause auto-advance when hovering over carousel
-        const carouselContainer = document.querySelector('.carousel-container');
-        carouselContainer.addEventListener('mouseenter', () => {
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                updateCarousel(i);
+                resetAutoSlide();
+            });
+        });
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(() => {
+                updateCarousel(currentIndex + 1);
+            }, 6000);
+        }
+
+        function resetAutoSlide() {
             clearInterval(autoSlideInterval);
-        });
+            startAutoSlide();
+        }
 
-        carouselContainer.addEventListener('mouseleave', () => {
-            autoSlideInterval = setInterval(nextSlide, 5000);
-        });
-
-        // ===== Modal Functionality =====
-        // Get all modal elements
-        const modal = document.getElementById('auth-modal');
-        const modalCloseButton = document.getElementById('modal-close');
-        const modalCancelButton = document.getElementById('modal-cancel');
-        const modalElectionName = document.getElementById('modal-election-name');
-        const practiceIdForm = document.getElementById('practice-id-form');
-        const practiceIdInput = document.getElementById('practice_id');
-
-        // Get all "Vote Now" buttons
-        const voteButtons = document.querySelectorAll('.vote-button');
-
-        // Function to open the modal
-        const openModal = (electionName) => {
-            modalElectionName.textContent = electionName; // Set election name in modal
-            modal.classList.remove('hidden');
-        };
-
-        // Function to close the modal
-        const closeModal = () => {
-            modal.classList.add('hidden');
-            practiceIdForm.reset(); // Clear the form
-        };
-
-        // Add click event listeners to all "Vote Now" buttons
-        voteButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const electionName = button.getAttribute('data-election');
-                openModal(electionName);
-            });
-        });
-
-        // Add click event listeners for closing the modal
-        modalCloseButton.addEventListener('click', closeModal);
-        modalCancelButton.addEventListener('click', closeModal);
-
-        // Close modal when clicking on the background overlay
-        modal.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                closeModal();
-            }
-        });
-
-        // Handle the form submission
-        practiceIdForm.addEventListener('submit', (event) => {
-            event.preventDefault(); // Prevent actual form submission
-            const practiceId = practiceIdInput.value;
-
-            // In a real app, you would send this ID to your server for verification.
-            console.log(`Practice ID Submitted: ${practiceId}`);
-            console.log(`For Election: ${modalElectionName.textContent}`);
-
-            // For this demo, we'll just show a message and close the modal.
-            // Using a simple message box instead of alert()
-            const submitButton = practiceIdForm.querySelector('button[type="submit"]');
-            submitButton.textContent = 'Verifying...';
-            submitButton.disabled = true;
-
-            // Simulate a network request
-            setTimeout(() => {
-                console.log('Verification complete.');
-                closeModal();
-                submitButton.textContent = 'Submit';
-                submitButton.disabled = false;
-                // You could redirect to the voting page here
-                // window.location.href = `/vote/${modalElectionName.textContent}?id=${practiceId}`;
-            }, 1000);
-        });
+        startAutoSlide();
     </script>
-
 </body>
 </html>

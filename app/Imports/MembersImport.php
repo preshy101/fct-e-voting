@@ -18,7 +18,7 @@ class MembersImport implements ToModel, WithHeadingRow, WithValidation
             'other_name' => $row['other_name'] ?? $row['other_name'] ?? null,
             'email' => $row['email'] ?? $row['email'] ?? null,
             'phone_number' => $row['phone_number'] ?? $row['phone_number'] ?? null,
-            'practice_id' => $row['practice_id'] ?? $row['practice_id'] ?? $row['practice_ID'] ?? null,
+            'staff_id' => $row['staff_id'] ?? $row['staff_id'] ?? $row['staff_ID'] ?? null,
             'grade' => $row['grade'] ?? $row['grade'] ?? null,
         ]);
     }
@@ -34,7 +34,7 @@ class MembersImport implements ToModel, WithHeadingRow, WithValidation
             '*.first_name' => 'required|string|max:255',
             '*.last_name' => 'required|string|max:255',
             '*.phone_number' => 'nullable|string|max:20',
-            '*.practice_id' => 'nullable|string|max:255',
+            '*.staff_id' => 'nullable|string|max:255',
             '*.grade' => 'nullable|string|max:100',
         ];
     }

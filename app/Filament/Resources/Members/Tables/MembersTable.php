@@ -12,6 +12,8 @@ use Filament\Actions\ImportAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
 
 class MembersTable
 {
@@ -30,7 +32,7 @@ class MembersTable
                     ->searchable(),
                 TextColumn::make('photo')
                     ->searchable(),
-                TextColumn::make('practice_ID')
+                TextColumn::make('staff_ID')
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -42,7 +44,16 @@ class MembersTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('did_not_vote_in')
+                    ->label('Did Not Vote In')
+                    ->options(fn () => \App\Models\election::pluck('title', 'id')->toArray())
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value'])) {
+                            $query->whereDoesntHave('votes', function (Builder $query) use ($data) {
+                                $query->where('election_id', $data['value']);
+                            });
+                        }
+                    })
             ])
             ->headerActions([
                 // Import action
@@ -50,11 +61,11 @@ class MembersTable
                 ->color("warning")->validateUsing([
                 'first_name' => 'required',
                 'last_name' => 'required',
-                // 'practice_ID' => ['required','numeric'],
+                // 'staff_ID' => ['required','numeric'],
             ]) ->sampleExcel(
                 sampleData: [
-                    ['first_name' => 'John', 'last_name' => 'Doe', 'email' => 'john@doe.com', 'grade' => 'Associate', 'practice_ID' => '015737'],
-                    ['first_name' => 'Jane', 'last_name' => 'Doe', 'email' => 'jane@doe.com', 'grade' => 'Associate', 'practice_ID' => '015333'],
+                    ['first_name' => 'John', 'last_name' => 'Doe', 'email' => 'john@doe.com', 'grade' => 'Associate', 'staff_ID' => '015737'],
+                    ['first_name' => 'Jane', 'last_name' => 'Doe', 'email' => 'jane@doe.com', 'grade' => 'Associate', 'staff_ID' => '015333'],
                 ],
                 fileName: 'sample.xlsx',
                 exportClass: SampleExcelExport::class,

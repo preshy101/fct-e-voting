@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="{{ asset('js/fctLogo.png') }}">
-    <title>Voter Accreditation - E-Vote Portal</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/fe deral_logo.jpeg') }}">
+    <title>Voter Accreditation E-Voting Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
+        }
+        .theme-gradient {
+            background: linear-gradient(135deg, #008751 0%, #004d2e 100%);
+        }
+        .btn-brand {
+            background: linear-gradient(135deg, #008751 0%, #005a36 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-brand:hover {
+            background: linear-gradient(135deg, #00a865 0%, #006b40 100%);
+            box-shadow: 0 10px 25px -5px rgba(0, 135, 81, 0.4);
         }
         .spinner {
             border: 2px solid #ffffff;
@@ -26,43 +37,36 @@
     </style>
     <script>
         function copyToken(token) {
-            // Create a temporary textarea element
             const textarea = document.createElement('textarea');
             textarea.value = token;
             textarea.style.position = 'fixed';
             textarea.style.opacity = '0';
             document.body.appendChild(textarea);
-
-            // Select and copy the text
             textarea.select();
-            textarea.setSelectionRange(0, 99999); // For mobile devices
+            textarea.setSelectionRange(0, 99999);
 
             try {
                 document.execCommand('copy');
-
-                // Show success feedback
                 const button = event.target.closest('button');
                 const originalText = button.innerHTML;
                 button.innerHTML = `
-                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                     </svg>
-                    Copied!
+                    Token Copied!
                 `;
-                button.classList.add('bg-green-600');
-                button.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                button.classList.add('bg-emerald-700');
+                button.classList.remove('bg-[#008751]');
 
                 setTimeout(() => {
                     button.innerHTML = originalText;
-                    button.classList.remove('bg-green-600');
-                    button.classList.add('bg-blue-600', 'hover:bg-blue-700');
-                }, 2000);
+                    button.classList.remove('bg-emerald-700');
+                    button.classList.add('bg-[#008751]');
+                }, 2500);
             } catch (err) {
                 console.error('Failed to copy token:', err);
                 alert('Failed to copy token. Please copy it manually.');
             }
-
-            // Remove the temporary textarea
             document.body.removeChild(textarea);
         }
 
@@ -72,72 +76,91 @@
             const buttonText = submitButton.querySelector('.button-text');
             const buttonSpinner = submitButton.querySelector('.button-spinner');
 
-            // Disable the button and show spinner
             submitButton.disabled = true;
             submitButton.classList.add('opacity-75', 'cursor-not-allowed');
-            submitButton.classList.remove('hover:bg-blue-700');
 
-            // Hide text and show spinner
             buttonText.classList.add('hidden');
             buttonSpinner.classList.remove('hidden');
         }
     </script>
 </head>
-<body class="bg-gray-50">
+<body class="bg-slate-50 min-h-screen flex flex-col text-slate-800">
+
     <!-- Header -->
-    <header class="bg-white shadow-sm">
+    <header class="bg-white border-b border-emerald-100 shadow-sm">
         <nav class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                    <a href="/" class="flex items-center gap-3 text-2xl text-gray-600 hover:text-gray-800">
-                        <img src="{{ asset('js/fctLogo.png') }}" width="50" height="50" alt="FCT Logo" srcset="">
+                <a href="/" class="flex items-center space-x-3">
+                    <img src="{{ asset('images/federal_logo.jpeg') }}" width="44" height="44" alt="Logo" class="h-10 w-auto object-contain">
+                    <div>
+                        <div class="text-xl font-extrabold text-slate-900 tracking-tight flex items-center gap-1">
+                            <span>e</span><span class="text-[#008751]">-Voting System</span>
+                        </div>
+                        <div class="text-[11px] text-slate-500 font-medium">Voter Accreditation</div>
+                    </div>
+                </a>
+
+                <div class="flex items-center space-x-3">
+                    <a href="{{ route('election.live.results') }}" class="px-4 py-2 text-sm font-semibold text-rose-600 hover:bg-rose-50 rounded-xl transition inline-flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+                        Live Results
                     </a>
-                    <h1 class="text-2xl font-bold text-blue-600">FCT e-Voting</h1>
+                    <a href="{{ route('election') }}" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition">
+                        View Elections
+                    </a>
                 </div>
             </div>
         </nav>
     </header>
 
-    <div class="container mx-auto px-6 py-12">
-        <div class="max-w-3xl mx-auto">
-            <!-- Page Header -->
+    <!-- Main Container -->
+    <div class="flex-grow container mx-auto px-6 py-10 md:py-14">
+        <div class="max-w-2xl mx-auto">
+
+            <!-- Page Title -->
             <div class="text-center mb-8">
-                <h1 class="text-4xl font-bold text-gray-900 mb-4">Voter Accreditation</h1>
-                <p class="text-lg text-gray-600">
-                    Request accreditation to participate in restricted elections
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-[#00683e] text-xs font-bold uppercase tracking-wider mb-3 border border-emerald-200">
+                    Step 1 of 2
+                </div>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-2">Voter Accreditation</h1>
+                <p class="text-sm md:text-base text-slate-600">
+                    Verify your membership using your staff email address or staff ID to obtain an official accreditation token.
                 </p>
             </div>
 
-            <!-- Accreditation Time Status -->
+            <!-- Accreditation Status Notice -->
             @if(isset($setting) && $setting->accreditation_start_time && $setting->accreditation_end_time)
                 @if($isAccreditationActive)
-                    <div class="bg-green-50 border-2 border-green-300 rounded-xl p-6 mb-8">
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 mb-8 shadow-sm">
                         <div class="flex items-start">
-                            <svg class="w-8 h-8 text-green-600 mr-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
+                            <div class="w-8 h-8 rounded-full bg-[#008751] text-white flex items-center justify-center mr-3.5 flex-shrink-0 mt-0.5">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
                             <div class="flex-1">
-                                <h3 class="text-lg font-semibold text-green-900 mb-2">Accreditation is Open</h3>
-                                <p class="text-green-800 mb-3">You can request your accreditation token now.</p>
-                                <div class="text-sm text-green-700 space-y-1">
-                                    <p><strong>Started:</strong> {{ $setting->accreditation_start_time->format('F j, Y \a\t g:i A') }}</p>
-                                    <p><strong>Ends:</strong> {{ $setting->accreditation_end_time->format('F j, Y \a\t g:i A') }}</p>
+                                <h2 class="text-base font-bold text-emerald-950 mb-1">Accreditation Portal is Open</h2>
+                                <p class="text-xs text-emerald-800 mb-2">You can request your accreditation token now.</p>
+                                <div class="text-xs text-emerald-700 flex flex-wrap gap-x-4 gap-y-1">
+                                    <span><strong>Opens:</strong> {{ $setting->accreditation_start_time->format('M d, Y h:i A') }}</span>
+                                    <span><strong>Closes:</strong> {{ $setting->accreditation_end_time->format('M d, Y h:i A') }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 @else
-                    <div class="bg-red-50 border-2 border-red-300 rounded-xl p-6 mb-8">
+                    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-8 shadow-sm">
                         <div class="flex items-start">
-                            <svg class="w-8 h-8 text-red-600 mr-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
-                            </svg>
+                            <div class="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center mr-3.5 flex-shrink-0 mt-0.5">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
                             <div class="flex-1">
-                                <h3 class="text-lg font-semibold text-red-900 mb-2">Accreditation Not Available</h3>
-                                <p class="text-red-800 mb-3">{{ $accreditationMessage }}</p>
-                                <div class="text-sm text-red-700 space-y-1">
-                                    <p><strong>Opens:</strong> {{ $setting->accreditation_start_time->format('F j, Y \a\t g:i A') }}</p>
-                                    <p><strong>Closes:</strong> {{ $setting->accreditation_end_time->format('F j, Y \a\t g:i A') }}</p>
+                                <h2 class="text-base font-bold text-amber-950 mb-1">Accreditation Window Closed</h2>
+                                <p class="text-xs text-amber-800 mb-2">{{ $accreditationMessage }}</p>
+                                <div class="text-xs text-amber-700 flex flex-wrap gap-x-4 gap-y-1">
+                                    <span><strong>Window:</strong> {{ $setting->accreditation_start_time->format('M d, h:i A') }} — {{ $setting->accreditation_end_time->format('M d, h:i A') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -146,8 +169,8 @@
             @endif
 
             @if ($errors->any())
-                <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-                    <ul class="list-disc list-inside text-red-700 space-y-1">
+                <div class="bg-red-50 border border-red-200 rounded-2xl p-4 mb-6">
+                    <ul class="list-disc list-inside text-xs text-red-700 space-y-1">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
@@ -155,158 +178,117 @@
                 </div>
             @endif
 
-            @if(isset($accreditation) && !$accreditation->is_approved)
-            <div class="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-6 mb-8">
-                <div class="flex items-start">
-                    <svg class="w-8 h-8 text-yellow-600 mr-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+            <!-- Token Generated Box -->
+            @if(session('token'))
+            <div class="mb-8 bg-gradient-to-br from-emerald-50 via-white to-emerald-50 border-2 border-[#008751] rounded-3xl p-8 shadow-xl text-center">
+                <div class="w-14 h-14 bg-emerald-100 text-[#008751] rounded-2xl flex items-center justify-center mx-auto mb-3">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
                     </svg>
-                    <div>
-                        <h3 class="text-lg font-semibold text-yellow-900 mb-1">Accreditation Pending</h3>
-                        <p class="text-yellow-700">Your accreditation request is being reviewed. You will receive an email once approved.</p>
+                </div>
+                <h2 class="text-2xl font-extrabold text-slate-900 mb-1">Your Accreditation Token</h2>
+                <p class="text-xs text-slate-500 mb-5">Keep this token confidential. You will need it to cast your vote.</p>
+
+                <div class="bg-white border-2 border-emerald-200 rounded-2xl p-6 shadow-inner mb-4 max-w-sm mx-auto">
+                    <div class="text-4xl md:text-5xl font-black text-[#008751] tracking-widest font-mono select-all">
+                        {{ session('token') }}
                     </div>
+                </div>
+
+                <button onclick="copyToken('{{ session('token') }}')"
+                        class="inline-flex items-center px-6 py-3 bg-[#008751] hover:bg-[#00683e] text-white text-sm font-bold rounded-xl shadow-md transition">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                    </svg>
+                    Copy Token
+                </button>
+
+                @if(session('member'))
+                <div class="bg-emerald-50/70 border border-emerald-100 rounded-2xl p-4 mt-6 text-left max-w-md mx-auto">
+                    <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">Member Verified:</h3>
+                    <div class="text-xs text-slate-600 space-y-1">
+                        <p><span class="font-semibold text-slate-700">Full Name:</span> {{ session('member')->first_name }} {{ session('member')->last_name }}</p>
+                        <p><span class="font-semibold text-slate-700">Staff ID:</span> {{ session('member')->staff_ID }}</p>
+                        @if(session('member')->email)
+                        <p><span class="font-semibold text-slate-700">Email:</span> {{ session('member')->email }}</p>
+                        @endif
+                    </div>
+                </div>
+                @endif
+
+                <div class="mt-6">
+                    <a href="{{ route('election.all') }}" class="inline-flex items-center px-8 py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-lg transition">
+                        <span>Proceed to Vote</span>
+                        <svg class="w-4 h-4 ml-2 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
             @endif
 
-            <!-- Accreditation Request Form -->
-            <div class="bg-white rounded-xl shadow-md p-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-6">Request Accreditation</h2>
-
-                @if(session('success'))
-                <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <div class="flex items-start">
-                        <svg class="w-6 h-6 text-green-600 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                        </svg>
-                        <div class="flex-1">
-                            <p class="text-green-700 font-medium">{{ session('success') }}</p>
-                        </div>
-                    </div>
+            <!-- Request Form Card -->
+            <div class="bg-white rounded-3xl border border-slate-200 shadow-md p-8 md:p-10">
+                <h2 class="text-xl font-bold text-slate-900 mb-4">Request Accreditation Token</h2>
+                
+                <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-4 mb-6">
+                    <p class="text-xs text-emerald-900 leading-relaxed">
+                        Enter your registered <strong>Staff Email Address</strong> or <strong>Staff ID</strong> (e.g. name@domain.com or 1234). Once submitted, the system will verify your membership and generate your secure single-use voting token.
+                    </p>
                 </div>
-                @endif
-
-                @if(session('token'))
-                <div class="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-xl p-6 shadow-lg">
-                    <div class="text-center">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Your Accreditation Token</h3>
-                        <p class="text-sm text-gray-600 mb-4">Please save this token. You will need it to cast your vote.</p>
-
-                        <div class="bg-white rounded-lg p-6 shadow-inner mb-4">
-                            <div class="text-5xl font-bold text-blue-600 tracking-widest font-mono mb-2">
-                                {{ session('token') }}
-                            </div>
-                            <button onclick="copyToken('{{ session('token') }}')"
-                                    class="mt-3 inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                                </svg>
-                                Copy Token
-                            </button>
-                        </div>
-
-                        @if(session('member'))
-                        <div class="bg-white rounded-lg p-4 text-left">
-                            <h4 class="font-semibold text-gray-900 mb-2">Member Information:</h4>
-                            <div class="text-sm text-gray-700 space-y-1">
-                                <p><span class="font-medium">Name:</span> {{ session('member')->first_name }} {{ session('member')->last_name }}</p>
-                                <p><span class="font-medium">Practice ID:</span> {{ session('member')->practice_ID }}</p>
-                                @if(session('member')->email)
-                                <p><span class="font-medium">Email:</span> {{ session('member')->email }}</p>
-                                @endif
-                            </div>
-                        </div>
-                        @endif
-
-                        <div class="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                            <p class="text-xs text-yellow-800 flex items-start">
-                                <svg class="w-4 h-4 mr-1 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span><strong>Important:</strong> Keep this token secure. It can only be used once to cast your vote. Do not share it with anyone.</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-                @if(session('error'))
-                <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-                    {{ session('error') }}
-                </div>
-                @endif
-                <!-- Information Box -->
-                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <h4 class="font-semibold text-blue-900 mb-2 flex items-center">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                            </svg>
-                            What happens next?
-                        </h4>
-                        <ul class="text-sm text-blue-800 space-y-1">
-                            <li>1. Your accreditation request will be reviewed by the election administrator</li>
-                            <li>2. You will receive an email notification once your request is approved or rejected</li>
-                            <li>3. If approved, you will receive an accreditation token to access the election</li>
-                        </ul>
-                    </div>
 
                 <form action="{{ route('accreditation.request') }}" method="POST" class="space-y-6" onsubmit="handleFormSubmit(event)">
                     @csrf
 
-                    <!-- Practice ID -->
                     <div>
-                        <label for="practice_id" class="block text-sm font-medium text-gray-700 mb-2">
-                            Practice ID <span class="text-red-500">*</span>
+                        <label for="staff_id" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                            Staff email address or staff ID <span class="text-red-500">*</span>
                         </label>
                         <input type="text"
-                               id="practice_id"
-                               name="practice_id"
+                               id="staff_id"
+                               name="staff_id"
                                required
                                {{ !$isAccreditationActive ? 'disabled' : '' }}
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent {{ !$isAccreditationActive ? 'bg-gray-100 cursor-not-allowed' : '' }}"
-                               placeholder="Enter your Practice ID">
-                        @error('practice_id')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                               class="w-full px-4 py-3.5 border border-slate-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#008751] focus:border-transparent text-slate-900 placeholder-slate-400 text-sm font-medium {{ !$isAccreditationActive ? 'bg-slate-100 cursor-not-allowed' : '' }}"
+                               placeholder="Enter your Staff email address or staff ID">
+                        @error('staff_id')
+                            <p class="mt-1.5 text-xs text-red-600 font-medium">{{ $message }}</p>
                         @enderror
                     </div>
 
-
-
-                    <!-- Submit Button -->
                     <button type="submit"
                             {{ !$isAccreditationActive ? 'disabled' : '' }}
-                            class="w-full px-6 py-3 {{ $isAccreditationActive ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed' }} text-white font-medium rounded-lg transition-colors shadow-md flex items-center justify-center">
+                            class="w-full py-4 px-6 {{ $isAccreditationActive ? 'btn-brand' : 'bg-slate-300 cursor-not-allowed' }} text-white font-bold text-sm rounded-xl shadow-md flex items-center justify-center transition">
                         <span class="button-text">
-                            {{ $isAccreditationActive ? 'Submit Accreditation Request' : 'Accreditation Not Available' }}
+                            {{ $isAccreditationActive ? 'Submit Accreditation Request' : 'Accreditation Currently Unavailable' }}
                         </span>
-                        <span class="button-spinner hidden">
-                            <div class="spinner inline-block mr-2"></div>
-                            Processing...
+                        <span class="button-spinner hidden flex items-center">
+                            <div class="spinner mr-2"></div>
+                            Verifying Member ID...
                         </span>
                     </button>
                 </form>
             </div>
 
-            <!-- Help Section -->
-            <div class="mt-8 text-center">
-                <p class="text-sm text-gray-500 mb-2">
-                    Need help with accreditation? <a href="mailto:info@niprfct.org.ng" class="text-blue-600 hover:text-blue-700 font-medium">
-                    Contact Support: +2348060126048 • +2348054771414 • +2348039652051
-                </a>
+            <!-- Help / Contact Support -->
+            <div class="mt-8 text-center text-xs text-slate-500 space-y-2">
+                <p>
+                    Need assistance with accreditation? <a href="mailto:info@niprfct.org.ng" class="text-[#008751] font-semibold hover:underline">Contact Support</a>
                 </p>
-                <a href="{{ route('election') }}"  class="text-blue-600 hover:text-blue-700 font-medium">
-                    Go To Elections
-                </a>
-                {{--  --}}
+                <p class="text-[11px] text-slate-400">
+                    Helpline: ---
+                </p>
             </div>
+
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 mt-12">
-        <div class="container mx-auto px-6 py-6 text-center text-gray-500">
-            <p>&copy; 2025 E-Vote Portal. All rights reserved.</p>
+    <footer class="bg-white border-t border-slate-200 py-6">
+        <div class="container mx-auto px-6 text-center text-xs text-slate-500">
+            <p>&copy; {{ date('Y') }} E-Voting Portal. All rights reserved.</p>
         </div>
     </footer>
+
 </body>
 </html>

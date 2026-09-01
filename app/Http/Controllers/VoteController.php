@@ -13,8 +13,8 @@ class VoteController extends Controller
 {
     public function index()
     {
-        $elections = election::where('is_active', true)
-            ->where('start_date', '<=', now())
+        $elections = election::with(['category', 'candidates'])
+            ->where('is_active', true)
             ->where('end_date', '>=', now())
             ->get();
         return view('welcome', compact('elections'));
@@ -23,7 +23,7 @@ class VoteController extends Controller
 {
     dd($request->all());
     $validated = $request->validate([
-        'practice_id' => 'required',
+        'staff_id' => 'required',
         'voter_id' => 'required',
         'election_slug' => 'required|exists:elections,slug'
     ]);
@@ -36,21 +36,38 @@ class VoteController extends Controller
     {
         // Fetch election details using the slug
         if ($slug == 'all') {
-            $elections = \App\Models\election::with('candidates')
-            ->where([['is_active', true], ['start_date', '<=', now()], ['end_date', '>=', now()]])
-            ->get();
+            $elections = election::with(['category', 'candidates'])
+                ->where('is_active', true)
+                ->where('end_date', '>=', now())
+                ->get();
 
             return view('election.details', compact('elections'));
-        }else{
+        } else {
+            $elections = election::with(['category', 'candidates'])
+                ->where('id', $slug)
+                ->get();
 
-        $elections = \App\Models\election::with('candidates')
-        // ->where(['is_active' => true, 'start_date' => ['<=', now()], 'end_date' => ['>=', now()]])
-        ->where('id',$slug)->get();
-
-        // Return a view with election details
-        return view('election.details', compact('elections'));
+            return view('election.details', compact('elections'));
         }
         return redirect()->back();
+    }
+
+    public function preview($id)
+    {
+        $elections = \App\Models\election::with('candidates')
+            ->where('id', $id)
+            ->get();
+            
+        if ($elections->isEmpty()) {
+            return redirect()->back()->with('error', 'Election not found.');
+        }
+        
+        if (!$elections->first()->preview_enabled) {
+            abort(403, 'Preview is not enabled for this election.');
+        }
+
+        $isPreview = true;
+        return view('election.details', compact('elections', 'isPreview'));
     }
 
     public function cast(Request $request)
@@ -172,15 +189,19 @@ class VoteController extends Controller
     public function verifyPractice(Request $request)
     {
         $request->validate([
-            'practice_id' => 'required|exists:members,practice_ID',
+            'staff_id' => 'required|string',
         ]);
 
-        $member = \App\Models\member::where('practice_ID', $request->practice_id)->first();
+        $input = trim($request->staff_id);
+
+        $member = \App\Models\member::where('staff_ID', $input)
+            ->orWhere('email', $input)
+            ->first();
 
         if (!$member) {
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid Practice ID. Please check and try again.'
+                'message' => 'No registered member found with this Staff ID or Email Address.'
             ], 404);
         }
 
@@ -210,7 +231,6 @@ class VoteController extends Controller
     {
         $elections = election::with('candidates.candidateBio')
             ->where('is_active', true)
-            ->where('start_date', '<=', now())
             ->where('end_date', '>=', now())
             ->get();
 
@@ -345,6 +365,77 @@ class VoteController extends Controller
             'votesCount' => 1,
             'memberEmail' => $request->member_email,
             'allowResultPreview' => $request->allow_result_preview ?? false
+        ]);
+    }
+
+    /**
+     * Show live real-time votes preview page across all active elections
+     */
+    public function liveResults()
+    {
+        $elections = election::with(['category', 'candidates' => function ($q) {
+                $q->withCount('votes');
+            }])
+            ->where('is_active', true)
+            ->get();
+
+        $membersCount = \App\Models\member::count();
+        $totalVotesAcrossAll = \App\Models\vote::count();
+
+        return view('election.live-results', compact('elections', 'membersCount', 'totalVotesAcrossAll'));
+    }
+
+    /**
+     * API endpoint returning real-time vote data for all active elections
+     */
+    public function apiAllLiveResults()
+    {
+        $elections = election::with(['category', 'candidates' => function ($q) {
+                $q->withCount('votes');
+            }])
+            ->where('is_active', true)
+            ->get();
+
+        $totalMembers = \App\Models\member::count();
+        $totalVotesOverall = \App\Models\vote::count();
+
+        $data = $elections->map(function ($election) use ($totalMembers) {
+            $totalVotes = $election->candidates->sum('votes_count');
+            $leader = $election->candidates->sortByDesc('votes_count')->first();
+
+            return [
+                'id' => $election->id,
+                'title' => $election->title,
+                'category' => $election->category->title ?? 'General',
+                'year' => $election->year,
+                'total_votes' => $totalVotes,
+                'turnout_percent' => $totalMembers > 0 ? round(($totalVotes / $totalMembers) * 100, 1) : 0,
+                'leader' => ($leader && $leader->votes_count > 0) ? [
+                    'id' => $leader->id,
+                    'name' => $leader->first_name . ' ' . $leader->last_name,
+                    'votes' => $leader->votes_count,
+                    'percent' => $totalVotes > 0 ? round(($leader->votes_count / $totalVotes) * 100, 1) : 0,
+                    'photo' => $leader->photo ? asset('storage/' . $leader->photo) : null,
+                    'initials' => strtoupper(substr($leader->first_name, 0, 1) . substr($leader->last_name, 0, 1)),
+                ] : null,
+                'candidates' => $election->candidates->sortByDesc('votes_count')->values()->map(function ($c) use ($totalVotes) {
+                    return [
+                        'id' => $c->id,
+                        'name' => $c->first_name . ' ' . $c->last_name,
+                        'photo' => $c->photo ? asset('storage/' . $c->photo) : null,
+                        'initials' => strtoupper(substr($c->first_name, 0, 1) . substr($c->last_name, 0, 1)),
+                        'votes_count' => $c->votes_count,
+                        'percent' => $totalVotes > 0 ? round(($c->votes_count / $totalVotes) * 100, 1) : 0,
+                    ];
+                })
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'total_members' => $totalMembers,
+            'total_votes_overall' => $totalVotesOverall,
+            'elections' => $data,
         ]);
     }
 

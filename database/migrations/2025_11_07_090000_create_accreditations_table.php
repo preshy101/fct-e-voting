@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use phpDocumentor\Reflection\Types\Nullable;
 
 return new class extends Migration
 {
@@ -14,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('accreditations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('member_id')->constrained('members')->onDelete('cascade'); 
+            $table->foreignId('election_id')->nullable()->constrained('elections')->cascadeOnDelete();
+            $table->foreignId('member_id')->constrained('members')->cascadeOnDelete(); 
             $table->string('token');
             $table->string('image')->nullable();
             $table->string('note')->nullable();
             $table->string('type')->nullable();
+            $table->boolean('is_approved')->default(true);
             $table->boolean('is_used')->default(false);
             $table->dateTime('used_at')->nullable();
             $table->timestamps();

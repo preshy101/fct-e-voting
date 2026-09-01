@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Settings;
 
+use App\Filament\Resources\Settings\Pages\CreateSetting;
 use App\Filament\Resources\Settings\Pages\EditSetting;
 use App\Filament\Resources\Settings\Pages\ListSettings;
 use App\Filament\Resources\Settings\Schemas\SettingForm;
@@ -20,13 +21,15 @@ class SettingResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
 
-    protected static ?string $navigationLabel = 'Settings';
+    protected static ?string $navigationLabel = 'Accreditation Settings';
 
-    protected static ?string $modelLabel = 'Setting';
+    protected static ?string $modelLabel = 'Accreditation Setting';
 
-    protected static string | UnitEnum | null $navigationGroup = 'System';
+    protected static ?string $pluralModelLabel = 'Accreditation Settings';
 
-    protected static ?int $navigationSort = 99;
+    protected static string | UnitEnum | null $navigationGroup = 'Election Management';
+
+    protected static ?int $navigationSort = 5;
 
     public static function form(Schema $schema): Schema
     {
@@ -42,12 +45,8 @@ class SettingResource extends Resource
     {
         return [
             'index' => ListSettings::route('/'),
+            'create' => CreateSetting::route('/create'),
             'edit' => EditSetting::route('/{record}/edit'),
         ];
-    }
-
-    public static function canCreate(): bool
-    {
-        return Setting::count() === 0;
     }
 }

@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 use UnitEnum;
 
 class ElectionResource extends Resource
@@ -26,6 +27,37 @@ class ElectionResource extends Resource
     protected static ?string $recordTitleAttribute = 'title';
 
     protected static string | UnitEnum | null $navigationGroup = 'Election Management';
+
+    protected static ?int $navigationSort = 3;
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return [
+            'title',
+            'year',
+            'category.title',
+            'description',
+        ];
+    }
+
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return "Election: {$record->title}" . ($record->year ? " [{$record->year}]" : '');
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Category' => $record->category->title ?? 'N/A',
+            'Status' => ucfirst($record->status ?? 'Active'),
+            'Voting Window' => ($record->start_date?->format('M d') ?? 'N/A') . ' — ' . ($record->end_date?->format('M d, Y') ?? 'N/A'),
+        ];
+    }
+
+    public static function getGlobalSearchResultUrl(Model $record): string
+    {
+        return ElectionResource::getUrl('view', ['record' => $record]);
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -57,6 +89,7 @@ class ElectionResource extends Resource
             'create' => CreateElection::route('/create'),
             'view' => ViewElection::route('/{record}'),
             'edit' => EditElection::route('/{record}/edit'),
+            'report' => Pages\ElectionReport::route('/{record}/report'),
         ];
     }
 }

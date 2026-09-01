@@ -21,6 +21,10 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
+    protected static ?string $navigationLabel = 'Administrators';
+    protected static ?string $pluralModelLabel = 'Administrators';
+    protected static ?string $modelLabel = 'Administrator';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserCircle;
 
     protected static ?string $recordTitleAttribute = 'name';

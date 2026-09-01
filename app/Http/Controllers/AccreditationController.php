@@ -40,21 +40,25 @@ class AccreditationController extends Controller
         if (!Setting::isAccreditationActive()) {
             $message = Setting::getAccreditationStatusMessage();
             return back()->withErrors([
-                'practice_id' => $message ?? 'Accreditation is currently not available.'
+                'staff_id' => $message ?? 'Accreditation is currently not available.'
             ]);
         }
 
         $validated = $request->validate([
-            'practice_id' => 'required|exists:members,practice_ID',
+            'staff_id' => 'required|string',
         ]);
 
-        // Find the member
-        $member = member::where('practice_ID', $request->practice_id)->first();
+        $input = trim($request->staff_id);
+
+        // Find the member by email address or staff ID
+        $member = member::where('email', $input)
+            ->orWhere('staff_ID', $input)
+            ->first();
 
         if (!$member) {
             return back()->withErrors([
-                'practice_id' => 'Invalid Practice ID.'
-            ]);
+                'staff_id' => 'No registered member found with this Staff ID or Email Address.'
+            ])->withInput();
         }
 
         // Check if already accredited and not used
