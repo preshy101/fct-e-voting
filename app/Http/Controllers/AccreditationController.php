@@ -7,6 +7,7 @@ use App\Models\accreditation;
 use App\Models\election;
 use App\Models\member;
 use App\Models\Setting;
+use App\Services\SmsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
@@ -67,9 +68,22 @@ class AccreditationController extends Controller
             ->first();
 
         if ($existingAccreditation) {
-            // Return existing token if already generated
+            // Resend SMS if phone number available
+            if ($member->phone_number) {
+                SmsService::sendToken($member->phone_number, $member->first_name, $existingAccreditation->token);
+            }
+
+            // Resend Email if email available
+            if ($member->email) {
+                try {
+                    Mail::to($member->email)->send(new AccreditationToken($existingAccreditation));
+                } catch (\Exception $e) {
+                    Log::error('Failed to resend accreditation email: ' . $e->getMessage());
+                }
+            }
+
             return back()->with([
-                'success' => 'Your accreditation token has already been generated.',
+                'success' => 'Your accreditation token has been retrieved and resent to your registered details.',
                 'token' => $existingAccreditation->token,
                 'member' => $member
             ]);
@@ -96,13 +110,22 @@ class AccreditationController extends Controller
                 Mail::to($member->email)->send(new AccreditationToken($accreditation));
             }
         } catch (\Exception $e) {
-            // Log error but don't fail the request
             Log::error('Failed to send accreditation email: ' . $e->getMessage());
         }
 
+        // Send SMS notification with token via Twilio
+        if ($member->phone_number) {
+            SmsService::sendToken($member->phone_number, $member->first_name, $token);
+        }
+
+        $sentChannels = [];
+        if ($member->email) $sentChannels[] = 'Email';
+        if ($member->phone_number) $sentChannels[] = 'SMS';
+        $channelText = !empty($sentChannels) ? ' Sent via ' . implode(' & ', $sentChannels) . '.' : '';
+
         // Return success with token for frontend display
         return back()->with([
-            'success' => 'Your accreditation token has been generated successfully.' . ($member->email ? ' An email has been sent to your registered email address.' : ''),
+            'success' => 'Your accreditation token has been generated successfully.' . $channelText,
             'token' => $accreditation->token,
             'member' => $member
         ]);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="{{ asset('images/fe deral_logo.jpeg') }}">
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/federal_logo.jpeg') }}">
     <title>Voter Accreditation E-Voting Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -180,46 +180,83 @@
 
             <!-- Token Generated Box -->
             @if(session('token'))
-            <div class="mb-8 bg-gradient-to-br from-emerald-50 via-white to-emerald-50 border-2 border-[#008751] rounded-3xl p-8 shadow-xl text-center">
-                <div class="w-14 h-14 bg-emerald-100 text-[#008751] rounded-2xl flex items-center justify-center mx-auto mb-3">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+            <div class="mb-8 bg-gradient-to-br from-emerald-50 via-white to-emerald-50 border-2 border-[#008751] rounded-3xl p-8 md:p-10 shadow-xl text-center">
+                <div class="w-16 h-16 bg-emerald-100 text-[#008751] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+                    <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                     </svg>
                 </div>
-                <h2 class="text-2xl font-extrabold text-slate-900 mb-1">Your Accreditation Token</h2>
-                <p class="text-xs text-slate-500 mb-5">Keep this token confidential. You will need it to cast your vote.</p>
+                <h2 class="text-2xl md:text-3xl font-black text-slate-900 mb-2">Accreditation Successful!</h2>
+                <p class="text-xs md:text-sm text-slate-600 mb-6 max-w-lg mx-auto leading-relaxed">
+                    Your confidential single-use voting token has been issued. For privacy and security, the token is concealed below and has been sent directly to your registered phone and email.
+                </p>
 
-                <div class="bg-white border-2 border-emerald-200 rounded-2xl p-6 shadow-inner mb-4 max-w-sm mx-auto">
-                    <div class="text-4xl md:text-5xl font-black text-[#008751] tracking-widest font-mono select-all">
-                        {{ session('token') }}
+                <!-- Hidden Masked Token Box -->
+                <div class="bg-white border-2 border-emerald-200 rounded-2xl p-5 shadow-inner mb-6 max-w-xs mx-auto">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Accreditation Token</div>
+                    <div class="text-3xl md:text-4xl font-black text-slate-700 tracking-[0.35em] font-mono select-none">
+                        ••••••
+                    </div>
+                    <div class="text-[11px] text-emerald-700 font-semibold mt-1 flex items-center justify-center gap-1">
+                        <svg class="w-3.5 h-3.5 text-[#008751]" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Concealed for Security</span>
                     </div>
                 </div>
 
-                <button onclick="copyToken('{{ session('token') }}')"
-                        class="inline-flex items-center px-6 py-3 bg-[#008751] hover:bg-[#00683e] text-white text-sm font-bold rounded-xl shadow-md transition">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                    </svg>
-                    Copy Token
-                </button>
+                <!-- Delivery Channels Notice Card -->
+                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 max-w-lg mx-auto text-left mb-6 shadow-sm">
+                    <h3 class="text-xs font-bold text-[#00683e] uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-[#008751]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span>Where to find your voting token:</span>
+                    </h3>
+                    <div class="space-y-3 text-xs text-slate-700">
+                        <div class="flex items-start gap-2.5">
+                            <div class="w-6 h-6 rounded-lg bg-emerald-200 text-[#00683e] flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">
+                                📱
+                            </div>
+                            <div>
+                                <strong class="text-slate-900 font-semibold">SMS Message:</strong>
+                                <span>Sent to your registered mobile phone number
+                                    @if(session('member') && session('member')->phone_number)
+                                        (<strong>{{ substr(session('member')->phone_number, 0, 4) . '***' . substr(session('member')->phone_number, -4) }}</strong>)
+                                    @endif
+                                    . Please check your SMS inbox.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-2.5">
+                            <div class="w-6 h-6 rounded-lg bg-emerald-200 text-[#00683e] flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">
+                                ✉️
+                            </div>
+                            <div>
+                                <strong class="text-slate-900 font-semibold">Email Inbox:</strong>
+                                <span>Sent to your registered email address
+                                    @if(session('member') && session('member')->email)
+                                        (<strong>{{ session('member')->email }}</strong>)
+                                    @endif
+                                    . Please check your Inbox and Spam/Junk folder.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 @if(session('member'))
-                <div class="bg-emerald-50/70 border border-emerald-100 rounded-2xl p-4 mt-6 text-left max-w-md mx-auto">
-                    <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">Member Verified:</h3>
-                    <div class="text-xs text-slate-600 space-y-1">
-                        <p><span class="font-semibold text-slate-700">Full Name:</span> {{ session('member')->first_name }} {{ session('member')->last_name }}</p>
-                        <p><span class="font-semibold text-slate-700">Staff ID:</span> {{ session('member')->staff_ID }}</p>
-                        @if(session('member')->email)
-                        <p><span class="font-semibold text-slate-700">Email:</span> {{ session('member')->email }}</p>
-                        @endif
-                    </div>
+                <div class="bg-white/80 border border-slate-200 rounded-2xl p-4 text-left max-w-lg mx-auto mb-6 text-xs text-slate-600 space-y-1">
+                    <p><span class="font-semibold text-slate-700">Accredited Member:</span> {{ session('member')->first_name }} {{ session('member')->last_name }}</p>
+                    <p><span class="font-semibold text-slate-700">Staff ID:</span> {{ session('member')->staff_ID }}</p>
                 </div>
                 @endif
 
-                <div class="mt-6">
-                    <a href="{{ route('election.all') }}" class="inline-flex items-center px-8 py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-lg transition">
-                        <span>Proceed to Vote</span>
-                        <svg class="w-4 h-4 ml-2 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div>
+                    <a href="{{ route('election.all') }}" class="inline-flex items-center px-8 py-4 bg-[#008751] hover:bg-[#00683e] text-white font-bold rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 text-sm">
+                        <span>Proceed to Voting Booth</span>
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                         </svg>
                     </a>

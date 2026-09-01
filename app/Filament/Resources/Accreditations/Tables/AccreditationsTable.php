@@ -121,38 +121,22 @@ class AccreditationsTable
                             return;
                         }
 
-                        $sid = env('TWILIO_SID');
-                        $token = env('TWILIO_AUTH_TOKEN');
-                        $twilio_number = env('TWILIO_PHONE_NUMBER');
+                        $sent = \App\Services\SmsService::sendToken(
+                            $record->member->phone_number,
+                            $record->member->first_name,
+                            $record->token
+                        );
 
-                        if (!$sid || !$token || !$twilio_number) {
-                            Notification::make()
-                                ->title('Error')
-                                ->body('Twilio credentials are not set.')
-                                ->danger()
-                                ->send();
-                            return;
-                        }
-
-                        try {
-                            $client = new Client($sid, $token);
-                            $client->messages->create(
-                                $record->member->phone_number,
-                                [
-                                    'from' => $twilio_number,
-                                    'body' => "Hello {$record->member->first_name}, your accreditation token is: {$record->token}"
-                                ]
-                            );
-
+                        if ($sent) {
                             Notification::make()
                                 ->title('SMS Sent')
                                 ->body('Token sent successfully to ' . $record->member->phone_number)
                                 ->success()
                                 ->send();
-                        } catch (\Exception $e) {
+                        } else {
                             Notification::make()
                                 ->title('Error sending SMS')
-                                ->body($e->getMessage())
+                                ->body('Could not send SMS. Please verify your Twilio credentials and phone number in .env.')
                                 ->danger()
                                 ->send();
                         }
